@@ -1,173 +1,474 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Attendance - UHS GAHIRI</title>
+<title>Attendance - UHS GAHIRI</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #eef5ff;
-        }
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef5ff;
+}
 
-        header {
-            background: #0757a0;
-            color: white;
-            text-align: center;
-            padding: 22px;
-        }
+header {
+    background: #0757a0;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
 
-        header h1 {
-            margin: 0;
-        }
+.container {
+    width: 92%;
+    max-width: 650px;
+    margin: 25px auto;
+}
 
-        .container {
-            padding: 20px;
-        }
+.card {
+    background: white;
+    padding: 20px;
+    margin-bottom: 18px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #ccc;
+}
 
-        .summary {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
+.info h2 {
+    color: #0757a0;
+    margin-top: 0;
+}
 
-        .card {
-            background: white;
-            padding: 20px 10px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px #ccc;
-            text-align: center;
-        }
+.stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+}
 
-        .card h3 {
-            margin-top: 0;
-            color: #555;
-        }
+.stat {
+    background: #f5f8fc;
+    padding: 15px 5px;
+    text-align: center;
+    border-radius: 10px;
+}
 
-        .number {
-            font-size: 32px;
-            font-weight: bold;
-            color: #0757a0;
-        }
+.stat-number {
+    font-size: 25px;
+    font-weight: bold;
+    color: #0757a0;
+}
 
-        .present {
-            color: green;
-        }
+.stat-label {
+    font-size: 13px;
+    margin-top: 5px;
+}
 
-        .absent {
-            color: red;
-        }
+.record {
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 8px;
+    background: #f5f8fc;
+    border-left: 5px solid #0757a0;
+}
 
-        .percentage-card {
-            background: white;
-            margin-top: 15px;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px #ccc;
-            text-align: center;
-        }
+.present {
+    border-left-color: #2e7d32;
+}
 
-        .percentage {
-            font-size: 45px;
-            font-weight: bold;
-            color: #0757a0;
-        }
+.absent {
+    border-left-color: #d32f2f;
+}
 
-        .bar {
-            width: 100%;
-            height: 18px;
-            background: #ddd;
-            border-radius: 20px;
-            overflow: hidden;
-            margin-top: 15px;
-        }
+.status-present {
+    color: #2e7d32;
+    font-weight: bold;
+}
 
-        .progress {
-            width: 85%;
-            height: 100%;
-            background: green;
-        }
+.status-absent {
+    color: #d32f2f;
+    font-weight: bold;
+}
 
-        .status {
-            margin-top: 15px;
-            padding: 10px;
-            background: #d4edda;
-            color: green;
-            border-radius: 7px;
-            font-weight: bold;
-        }
+.empty {
+    text-align: center;
+    color: #777;
+    padding: 20px;
+}
 
-        .back {
-            display: block;
-            width: 180px;
-            margin: 25px auto;
-            padding: 12px;
-            text-align: center;
-            background: #0757a0;
-            color: white;
-            text-decoration: none;
-            border-radius: 7px;
-        }
-    </style>
+.percentage-box {
+    text-align: center;
+    padding: 20px;
+    background: #eef5ff;
+    border-radius: 10px;
+}
+
+.percentage {
+    font-size: 40px;
+    font-weight: bold;
+    color: #0757a0;
+}
+
+.back {
+    display: block;
+    width: 210px;
+    margin: 25px auto;
+    padding: 12px;
+    background: #0757a0;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+@media (max-width: 450px) {
+    .stats {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
 </head>
 
 <body>
 
 <header>
     <h1>UHS GAHIRI</h1>
-    <p>Student Attendance</p>
+    <p>📅 My Attendance</p>
 </header>
+
 
 <div class="container">
 
-    <div class="summary">
 
-        <div class="card">
-            <h3>Total Days</h3>
-            <div class="number">100</div>
-        </div>
+    <!-- STUDENT INFORMATION -->
 
-        <div class="card">
-            <h3>Present</h3>
-            <div class="number present">85</div>
-        </div>
+    <div class="card info">
 
-        <div class="card">
-            <h3>Absent</h3>
-            <div class="number absent">15</div>
-        </div>
+        <h2>👨‍🎓 Student Information</h2>
 
-        <div class="card">
-            <h3>Working Days</h3>
-            <div class="number">100</div>
+        <p>
+            <b>Name:</b>
+            <span id="studentName">Student</span>
+        </p>
+
+        <p>
+            <b>Student ID:</b>
+            <span id="studentID">---</span>
+        </p>
+
+        <p>
+            <b>Class:</b> 12th
+        </p>
+
+    </div>
+
+
+    <!-- ATTENDANCE SUMMARY -->
+
+    <div class="card">
+
+        <h2>📊 Attendance Summary</h2>
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <div
+                    class="stat-number"
+                    id="totalDays">
+                    0
+                </div>
+
+                <div class="stat-label">
+                    Total Days
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div
+                    class="stat-number"
+                    id="presentDays">
+                    0
+                </div>
+
+                <div class="stat-label">
+                    Present
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div
+                    class="stat-number"
+                    id="absentDays">
+                    0
+                </div>
+
+                <div class="stat-label">
+                    Absent
+                </div>
+
+            </div>
+
         </div>
 
     </div>
 
-    <div class="percentage-card">
 
-        <h3>Attendance Percentage</h3>
+    <!-- PERCENTAGE -->
 
-        <div class="percentage">85%</div>
+    <div class="card">
 
-        <div class="bar">
-            <div class="progress"></div>
-        </div>
+        <div class="percentage-box">
 
-        <div class="status">
-            ✅ Attendance is Good
+            <div>
+                📈 Attendance Percentage
+            </div>
+
+            <div
+                class="percentage"
+                id="percentage">
+                0%
+            </div>
+
         </div>
 
     </div>
+
+
+    <!-- RECORDS -->
+
+    <div class="card">
+
+        <h2>📋 Attendance Records</h2>
+
+        <div id="attendanceList"></div>
+
+    </div>
+
 
 </div>
 
+
 <a class="back" href="dashboard.html">
-    ← Dashboard
+    ← Back to Dashboard
 </a>
+
+
+<script>
+
+/* ================= LOGIN CHECK ================= */
+
+if (
+    localStorage.getItem("studentLoggedIn")
+    !== "true"
+) {
+
+    alert(
+        "Please Student Login karein."
+    );
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* ================= STUDENT DATA ================= */
+
+let studentID =
+    localStorage.getItem("studentID");
+
+let studentName =
+    localStorage.getItem("studentName");
+
+
+document.getElementById(
+    "studentName"
+).innerText =
+    studentName || "Student";
+
+
+document.getElementById(
+    "studentID"
+).innerText =
+    studentID || "---";
+
+
+/* ================= LOAD ATTENDANCE ================= */
+
+function loadAttendance() {
+
+    let records =
+        JSON.parse(
+            localStorage.getItem(
+                "studentAttendance"
+            )
+        ) || [];
+
+
+    /* Only current student's records */
+
+    let myRecords =
+        records.filter(function(item) {
+
+            return item.studentId === studentID;
+
+        });
+
+
+    /* COUNTS */
+
+    let total =
+        myRecords.length;
+
+
+    let present =
+        myRecords.filter(function(item) {
+
+            return item.status === "Present";
+
+        }).length;
+
+
+    let absent =
+        myRecords.filter(function(item) {
+
+            return item.status === "Absent";
+
+        }).length;
+
+
+    /* PERCENTAGE */
+
+    let percentage = 0;
+
+
+    if (total > 0) {
+
+        percentage =
+            Math.round(
+                (present / total) * 100
+            );
+
+    }
+
+
+    /* SHOW COUNTS */
+
+    document.getElementById(
+        "totalDays"
+    ).innerText = total;
+
+
+    document.getElementById(
+        "presentDays"
+    ).innerText = present;
+
+
+    document.getElementById(
+        "absentDays"
+    ).innerText = absent;
+
+
+    document.getElementById(
+        "percentage"
+    ).innerText =
+        percentage + "%";
+
+
+    /* SHOW RECORDS */
+
+    let list =
+        document.getElementById(
+            "attendanceList"
+        );
+
+    list.innerHTML = "";
+
+
+    if (myRecords.length === 0) {
+
+        list.innerHTML = `
+            <div class="empty">
+
+                📅 अभी आपकी attendance
+                available नहीं है।
+
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    /* Latest first */
+
+    myRecords.reverse();
+
+
+    myRecords.forEach(function(item) {
+
+        let div =
+            document.createElement("div");
+
+
+        if (item.status === "Present") {
+
+            div.className =
+                "record present";
+
+            div.innerHTML = `
+
+                📅 <b>${item.date}</b>
+
+                <br><br>
+
+                <span class="status-present">
+                    ✅ Present
+                </span>
+
+            `;
+
+        } else {
+
+            div.className =
+                "record absent";
+
+            div.innerHTML = `
+
+                📅 <b>${item.date}</b>
+
+                <br><br>
+
+                <span class="status-absent">
+                    ❌ Absent
+                </span>
+
+            `;
+
+        }
+
+
+        list.appendChild(div);
+
+    });
+
+}
+
+
+/* ================= START ================= */
+
+loadAttendance();
+
+</script>
 
 </body>
 </html>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Student Profile - UHS GAHIRI</title>
+<title>My Profile - UHS GAHIRI</title>
 
 <style>
 body {
@@ -17,31 +17,62 @@ header {
     background: #0757a0;
     color: white;
     text-align: center;
-    padding: 22px;
+    padding: 20px;
+}
+
+.container {
+    width: 92%;
+    max-width: 600px;
+    margin: 25px auto;
 }
 
 .profile {
     background: white;
-    width: 90%;
-    max-width: 450px;
-    margin: 25px auto;
     padding: 25px;
-    box-sizing: border-box;
     border-radius: 12px;
     box-shadow: 0 3px 10px #ccc;
 }
 
-.photo {
-    width: 90px;
-    height: 90px;
-    margin: auto;
+.photo-box {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-photo {
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #0757a0;
+    background: #eef5ff;
+}
+
+.photo-button {
+    display: block;
+    width: 200px;
+    margin: 15px auto 5px;
+    padding: 12px;
     background: #0757a0;
     color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 40px;
+    border-radius: 7px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#photoInput {
+    display: none;
+}
+
+.remove-button {
+    width: 200px;
+    padding: 10px;
+    margin-top: 8px;
+    background: #d32f2f;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 h2 {
@@ -51,26 +82,36 @@ h2 {
 
 .info {
     border-bottom: 1px solid #ddd;
-    padding: 13px 0;
+    padding: 14px 0;
 }
 
-.info b {
-    color: #0757a0;
+.info:last-child {
+    border-bottom: none;
+}
+
+.label {
+    color: #777;
+    font-size: 14px;
+}
+
+.value {
+    font-size: 17px;
+    font-weight: bold;
+    margin-top: 4px;
+    word-break: break-word;
 }
 
 .back {
     display: block;
-    width: 180px;
+    width: 200px;
     margin: 25px auto;
     padding: 12px;
-    text-align: center;
     background: #0757a0;
     color: white;
-    border: none;
+    text-align: center;
+    text-decoration: none;
     border-radius: 7px;
-    font-size: 16px;
     font-weight: bold;
-    cursor: pointer;
 }
 </style>
 </head>
@@ -79,72 +120,307 @@ h2 {
 
 <header>
     <h1>UHS GAHIRI</h1>
-    <p>👤 Student Profile</p>
+    <p>👤 My Profile</p>
 </header>
 
-<div class="profile">
 
-    <div class="photo">
-        👤
-    </div>
+<div class="container">
 
-    <h2>Student Profile</h2>
+    <div class="profile">
 
-    <div class="info">
-        <b>Name:</b>
-        <span id="studentName">Student</span>
-    </div>
+        <!-- PROFILE PHOTO -->
 
-    <div class="info">
-        <b>Student ID:</b>
-        <span id="studentID">---</span>
-    </div>
+        <div class="photo-box">
 
-    <div class="info">
-        <b>Class:</b> 12th
-    </div>
+            <img
+                id="profilePhoto"
+                class="profile-photo"
+                alt="Profile Picture"
+            >
 
-    <div class="info">
-        <b>Stream:</b> Science
-    </div>
+            <label
+                for="photoInput"
+                class="photo-button"
+            >
+                📷 Change Profile Picture
+            </label>
 
-    <div class="info">
-        <b>School:</b> UHS GAHIRI
+            <input
+                type="file"
+                id="photoInput"
+                accept="image/*"
+            >
+
+            <button
+                class="remove-button"
+                onclick="removePhoto()"
+            >
+                🗑️ Remove Picture
+            </button>
+
+        </div>
+
+
+        <h2 id="studentName">
+            Student
+        </h2>
+
+
+        <div class="info">
+
+            <div class="label">
+                Student ID
+            </div>
+
+            <div
+                class="value"
+                id="studentID"
+            >
+                ---
+            </div>
+
+        </div>
+
+
+        <div class="info">
+
+            <div class="label">
+                Email
+            </div>
+
+            <div
+                class="value"
+                id="studentEmail"
+            >
+                ---
+            </div>
+
+        </div>
+
+
+        <div class="info">
+
+            <div class="label">
+                Class
+            </div>
+
+            <div class="value">
+                12th
+            </div>
+
+        </div>
+
+
+        <div class="info">
+
+            <div class="label">
+                Stream
+            </div>
+
+            <div class="value">
+                Science
+            </div>
+
+        </div>
+
+
+        <div class="info">
+
+            <div class="label">
+                Account Status
+            </div>
+
+            <div class="value">
+                ✅ Active
+            </div>
+
+        </div>
+
     </div>
 
 </div>
 
-<button class="back" onclick="goDashboard()">
-    ← Dashboard
-</button>
+
+<a class="back" href="dashboard.html">
+    ← Back to Dashboard
+</a>
+
 
 <script>
 
-let loggedIn =
-localStorage.getItem("studentLoggedIn");
+/* ================= LOGIN CHECK ================= */
 
-if (loggedIn !== "true") {
+if (
+    localStorage.getItem("studentLoggedIn")
+    !== "true"
+) {
 
     alert("Please Student Login karein.");
 
-    window.location.href = "login.html";
+    window.location.href =
+        "login.html";
 
 }
+
+
+/* ================= STUDENT DATA ================= */
+
+document.getElementById("studentName").innerText =
+    localStorage.getItem("studentName")
+    || "Student";
+
+
+document.getElementById("studentID").innerText =
+    localStorage.getItem("studentID")
+    || "---";
+
+
+document.getElementById("studentEmail").innerText =
+    localStorage.getItem("studentEmail")
+    || "---";
+
+
+/* ================= PROFILE PHOTO ================= */
 
 let studentID =
-localStorage.getItem("studentID");
+    localStorage.getItem("studentID");
 
-if (studentID) {
 
-    document.getElementById("studentID").innerText =
-    studentID;
+let savedPhoto =
+    localStorage.getItem(
+        "profilePhoto_" + studentID
+    );
+
+
+let photo =
+    document.getElementById("profilePhoto");
+
+
+if (savedPhoto) {
+
+    photo.src = savedPhoto;
+
+} else {
+
+    photo.src =
+        "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="120"
+             height="120"
+             viewBox="0 0 120 120">
+
+            <circle
+                cx="60"
+                cy="60"
+                r="58"
+                fill="#eef5ff"/>
+
+            <text
+                x="60"
+                y="72"
+                text-anchor="middle"
+                font-size="55">
+                👨‍🎓
+            </text>
+
+        </svg>
+        `);
 
 }
 
-function goDashboard() {
 
-    window.location.href =
-    "dashboard.html";
+/* ================= SELECT PHOTO ================= */
+
+document.getElementById("photoInput")
+.addEventListener("change", function(event) {
+
+    let file =
+        event.target.files[0];
+
+
+    if (!file) {
+        return;
+    }
+
+
+    /* IMAGE CHECK */
+
+    if (!file.type.startsWith("image/")) {
+
+        alert(
+            "❌ Sirf image select karein."
+        );
+
+        return;
+
+    }
+
+
+    /* SIZE CHECK */
+
+    if (file.size > 2 * 1024 * 1024) {
+
+        alert(
+            "❌ Image 2 MB se chhoti honi chahiye."
+        );
+
+        return;
+
+    }
+
+
+    let reader =
+        new FileReader();
+
+
+    reader.onload = function(e) {
+
+        let imageData =
+            e.target.result;
+
+
+        photo.src =
+            imageData;
+
+
+        localStorage.setItem(
+            "profilePhoto_" + studentID,
+            imageData
+        );
+
+
+        alert(
+            "Profile Picture Saved! ✅"
+        );
+
+    };
+
+
+    reader.readAsDataURL(file);
+
+});
+
+
+/* ================= REMOVE PHOTO ================= */
+
+function removePhoto() {
+
+    if (
+        !confirm(
+            "Kya profile picture remove karni hai?"
+        )
+    ) {
+        return;
+    }
+
+
+    localStorage.removeItem(
+        "profilePhoto_" + studentID
+    );
+
+
+    location.reload();
 
 }
 

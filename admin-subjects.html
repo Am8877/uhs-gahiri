@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Manage Subjects - UHS GAHIRI</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef5ff;
+}
+
+header {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.container {
+    width: 94%;
+    max-width: 700px;
+    margin: 25px auto;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    margin-bottom: 18px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #ccc;
+}
+
+h2 {
+    color: #0757a0;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 7px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+}
+
+button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 15px;
+    background: #0757a0;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.subject {
+    border-left: 5px solid #0757a0;
+    margin-bottom: 12px;
+}
+
+.delete {
+    background: #d32f2f;
+}
+
+.empty {
+    text-align: center;
+    color: #777;
+}
+
+.back {
+    display: block;
+    width: 230px;
+    margin: 25px auto;
+    padding: 12px;
+    background: #333;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 7px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>UHS GAHIRI</h1>
+    <p>📚 Subject Management</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>➕ Add Subject</h2>
+
+        <form id="subjectForm">
+
+            <label>Subject Name</label>
+
+            <input
+                type="text"
+                id="subjectName"
+                placeholder="Example: Mathematics"
+                required
+            >
+
+            <button type="submit">
+                ➕ Add Subject
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>📚 Current Subjects</h2>
+
+        <div id="subjectList"></div>
+
+    </div>
+
+</div>
+
+<a class="back" href="admin-dashboard.html">
+    ← Back to Principal Dashboard
+</a>
+
+
+<script>
+
+/* ADMIN CHECK */
+
+if (
+    localStorage.getItem("adminLoggedIn")
+    !== "true"
+) {
+
+    alert("Please Principal Login karein.");
+
+    window.location.href =
+        "admin-login.html";
+
+}
+
+
+/* LOAD SUBJECTS */
+
+function loadSubjects() {
+
+    let subjects =
+        JSON.parse(
+            localStorage.getItem("schoolSubjects")
+        ) || [];
+
+    let list =
+        document.getElementById("subjectList");
+
+    list.innerHTML = "";
+
+
+    if (subjects.length === 0) {
+
+        list.innerHTML = `
+            <div class="empty">
+                📚 Abhi koi subject add nahi hai.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    subjects.forEach(function(subject, index) {
+
+        let div =
+            document.createElement("div");
+
+        div.className = "card subject";
+
+
+        div.innerHTML = `
+            <b>📚 ${subject}</b>
+
+            <button
+                class="delete"
+                onclick="deleteSubject(${index})">
+
+                🗑️ Delete Subject
+
+            </button>
+        `;
+
+
+        list.appendChild(div);
+
+    });
+
+}
+
+
+/* ADD SUBJECT */
+
+document.getElementById("subjectForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+
+    let name =
+        document.getElementById("subjectName")
+        .value.trim();
+
+
+    if (!name) {
+        return;
+    }
+
+
+    let subjects =
+        JSON.parse(
+            localStorage.getItem("schoolSubjects")
+        ) || [];
+
+
+    let exists =
+        subjects.some(function(subject) {
+
+            return subject.toLowerCase()
+                === name.toLowerCase();
+
+        });
+
+
+    if (exists) {
+
+        alert("❌ Ye subject already added hai.");
+
+        return;
+
+    }
+
+
+    subjects.push(name);
+
+
+    localStorage.setItem(
+        "schoolSubjects",
+        JSON.stringify(subjects)
+    );
+
+
+    document.getElementById(
+        "subjectForm"
+    ).reset();
+
+
+    loadSubjects();
+
+
+    alert("Subject Added! ✅");
+
+});
+
+
+/* DELETE SUBJECT */
+
+function deleteSubject(index) {
+
+    let subjects =
+        JSON.parse(
+            localStorage.getItem("schoolSubjects")
+        ) || [];
+
+
+    if (!confirm("Kya subject delete karna hai?")) {
+        return;
+    }
+
+
+    subjects.splice(index, 1);
+
+
+    localStorage.setItem(
+        "schoolSubjects",
+        JSON.stringify(subjects)
+    );
+
+
+    loadSubjects();
+
+}
+
+
+/* START */
+
+loadSubjects();
+
+</script>
+
+</body>
+</html>

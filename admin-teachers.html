@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Homework Management - UHS GAHIRI</title>
+<title>Teacher Management - UHS GAHIRI</title>
 
 <style>
 body {
@@ -44,20 +44,13 @@ label {
     margin-top: 12px;
 }
 
-input,
-textarea {
+input {
     width: 100%;
     padding: 12px;
     margin-top: 7px;
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 7px;
-    font-family: Arial;
-}
-
-textarea {
-    min-height: 120px;
-    resize: vertical;
 }
 
 button {
@@ -76,8 +69,14 @@ button {
     background: #d32f2f;
 }
 
-.homework {
+.teacher {
     border-left: 5px solid #0757a0;
+}
+
+.count {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .empty {
@@ -104,53 +103,60 @@ button {
 
 <header>
     <h1>UHS GAHIRI</h1>
-    <p>📚 Homework Management</p>
+    <p>👨‍🏫 Teacher Management</p>
 </header>
 
 <div class="container">
 
 <div class="card">
 
-<h2>➕ Add Homework</h2>
+<h2>➕ Add Teacher</h2>
 
-<form id="homeworkForm">
+<div class="count">
+    Teachers:
+    <span id="teacherCount">0</span>/20
+</div>
 
-<label>Student ID</label>
+<form id="teacherForm">
 
-<input
-type="text"
-id="studentId"
-placeholder="Example: UHS001"
-required
->
-
-<label>Subject</label>
+<label>Teacher Name</label>
 
 <input
 type="text"
-id="subject"
-placeholder="Example: Physics"
+id="teacherName"
+placeholder="Enter Teacher Name"
 required
 >
 
-<label>Homework</label>
-
-<textarea
-id="homework"
-placeholder="Homework details likhein..."
-required
-></textarea>
-
-<label>Last Date</label>
+<label>Teacher ID</label>
 
 <input
-type="date"
-id="lastDate"
+type="text"
+id="teacherId"
+placeholder="Example: T001"
+required
+>
+
+<label>Email</label>
+
+<input
+type="email"
+id="teacherEmail"
+placeholder="Teacher Email"
+required
+>
+
+<label>Password</label>
+
+<input
+type="password"
+id="teacherPassword"
+placeholder="Create Password"
 required
 >
 
 <button type="submit">
-💾 Save Homework
+    👨‍🏫 Add Teacher
 </button>
 
 </form>
@@ -160,9 +166,9 @@ required
 
 <div class="card">
 
-<h2>📋 Saved Homework</h2>
+<h2>👨‍🏫 Added Teachers</h2>
 
-<div id="homeworkList"></div>
+<div id="teacherList"></div>
 
 </div>
 
@@ -176,7 +182,7 @@ required
 
 <script>
 
-/* ADMIN CHECK */
+/* ================= PRINCIPAL CHECK ================= */
 
 if (
     localStorage.getItem("adminLoggedIn")
@@ -190,30 +196,37 @@ if (
 }
 
 
-/* LOAD HOMEWORK */
+/* ================= LOAD TEACHERS ================= */
 
-function loadHomework() {
+function loadTeachers() {
 
-    let homework =
+    let teachers =
         JSON.parse(
             localStorage.getItem(
-                "studentHomework"
+                "schoolTeachers"
             )
         ) || [];
 
+
+    document.getElementById(
+        "teacherCount"
+    ).innerText = teachers.length;
+
+
     let list =
         document.getElementById(
-            "homeworkList"
+            "teacherList"
         );
+
 
     list.innerHTML = "";
 
 
-    if (homework.length === 0) {
+    if (teachers.length === 0) {
 
         list.innerHTML = `
             <div class="empty">
-                📚 अभी कोई homework नहीं है।
+                👨‍🏫 अभी कोई Teacher add नहीं है।
             </div>
         `;
 
@@ -221,159 +234,199 @@ function loadHomework() {
     }
 
 
-    homework.forEach(function(item, index) {
+    teachers.forEach(function(teacher, index) {
 
         let div =
             document.createElement("div");
 
         div.className =
-            "card homework";
+            "card teacher";
+
 
         div.innerHTML = `
 
             <h3>
-                📚 ${item.subject}
+                👨‍🏫 ${teacher.name}
             </h3>
 
             <p>
-                👨‍🎓 Student ID:
-                <b>${item.studentId}</b>
+                🆔 Teacher ID:
+                <b>${teacher.teacherId}</b>
             </p>
 
             <p>
-                ${item.homework}
-            </p>
-
-            <p>
-                📅 Last Date:
-                <b>${item.lastDate}</b>
+                📧 Email:
+                ${teacher.email}
             </p>
 
             <button
                 class="delete"
-                onclick="deleteHomework(${index})">
+                onclick="deleteTeacher(${index})">
 
-                🗑️ Delete Homework
+                🗑️ Delete Teacher
 
             </button>
 
         `;
 
+
         list.appendChild(div);
 
     });
+
 }
 
 
-/* SAVE HOMEWORK */
+/* ================= ADD TEACHER ================= */
 
 document.getElementById(
-    "homeworkForm"
+    "teacherForm"
 ).addEventListener(
 "submit",
 function(event) {
 
     event.preventDefault();
 
-    let studentId =
+
+    let name =
         document.getElementById(
-            "studentId"
+            "teacherName"
         ).value.trim();
 
-    let subject =
+
+    let teacherId =
         document.getElementById(
-            "subject"
+            "teacherId"
         ).value.trim();
 
-    let homeworkText =
+
+    let email =
         document.getElementById(
-            "homework"
+            "teacherEmail"
         ).value.trim();
 
-    let lastDate =
+
+    let password =
         document.getElementById(
-            "lastDate"
+            "teacherPassword"
         ).value;
 
 
-    let homework =
+    let teachers =
         JSON.parse(
             localStorage.getItem(
-                "studentHomework"
+                "schoolTeachers"
             )
         ) || [];
 
 
-    homework.unshift({
+    /* MAX 20 */
 
-        studentId: studentId,
+    if (teachers.length >= 20) {
 
-        subject: subject,
+        alert(
+            "❌ Maximum 20 Teachers hi add kiye ja sakte hain."
+        );
 
-        homework: homeworkText,
+        return;
+    }
 
-        lastDate: lastDate
+
+    /* DUPLICATE ID */
+
+    let exists =
+        teachers.find(function(teacher) {
+
+            return (
+                teacher.teacherId ===
+                teacherId
+            );
+
+        });
+
+
+    if (exists) {
+
+        alert(
+            "❌ Ye Teacher ID already registered hai."
+        );
+
+        return;
+    }
+
+
+    /* CREATE TEACHER */
+
+    teachers.push({
+
+        name: name,
+
+        teacherId: teacherId,
+
+        email: email,
+
+        password: password
 
     });
 
 
     localStorage.setItem(
-        "studentHomework",
-        JSON.stringify(homework)
+        "schoolTeachers",
+        JSON.stringify(teachers)
     );
 
 
     document.getElementById(
-        "homeworkForm"
+        "teacherForm"
     ).reset();
 
 
-    loadHomework();
+    loadTeachers();
 
 
     alert(
-        "Homework Saved Successfully! ✅"
+        "Teacher Successfully Added! ✅"
     );
 
 });
 
 
-/* DELETE HOMEWORK */
+/* ================= DELETE TEACHER ================= */
 
-function deleteHomework(index) {
+function deleteTeacher(index) {
 
     if (
         !confirm(
-            "Kya ye homework delete karna hai?"
+            "Kya aap is Teacher ko delete karna chahte hain?"
         )
     ) {
         return;
     }
 
 
-    let homework =
+    let teachers =
         JSON.parse(
             localStorage.getItem(
-                "studentHomework"
+                "schoolTeachers"
             )
         ) || [];
 
 
-    homework.splice(index, 1);
+    teachers.splice(index, 1);
 
 
     localStorage.setItem(
-        "studentHomework",
-        JSON.stringify(homework)
+        "schoolTeachers",
+        JSON.stringify(teachers)
     );
 
 
-    loadHomework();
+    loadTeachers();
 
 }
 
 
-loadHomework();
+loadTeachers();
 
 </script>
 

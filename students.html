@@ -14,52 +14,66 @@ body {
 }
 
 header {
-    background: #0757a0;
+    background: #333;
     color: white;
     text-align: center;
-    padding: 22px;
-}
-
-.container {
     padding: 20px;
 }
 
-.student {
-    background: white;
-    padding: 18px;
-    margin-bottom: 15px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px #ccc;
+.container {
+    width: 94%;
+    max-width: 800px;
+    margin: 25px auto;
 }
 
-.student h2 {
-    margin-top: 0;
+.card {
+    background: white;
+    margin-bottom: 15px;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #ccc;
+}
+
+.student-name {
+    font-size: 20px;
+    font-weight: bold;
     color: #0757a0;
 }
 
 .info {
-    margin: 8px 0;
+    margin-top: 8px;
+    color: #555;
 }
 
-.status {
-    display: inline-block;
-    background: #d4edda;
-    color: green;
-    padding: 6px 12px;
+.delete {
+    margin-top: 12px;
+    padding: 9px 15px;
+    background: #d32f2f;
+    color: white;
+    border: none;
     border-radius: 6px;
-    font-weight: bold;
+    cursor: pointer;
+}
+
+.empty {
+    background: white;
+    padding: 25px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #ccc;
 }
 
 .back {
     display: block;
-    width: 180px;
+    width: 220px;
     margin: 25px auto;
     padding: 12px;
-    text-align: center;
-    background: #0757a0;
+    background: #333;
     color: white;
+    text-align: center;
     text-decoration: none;
     border-radius: 7px;
+    font-weight: bold;
 }
 </style>
 </head>
@@ -67,69 +81,166 @@ header {
 <body>
 
 <header>
+
     <h1>UHS GAHIRI</h1>
-    <p>Student Management</p>
+
+    <p>👨‍🎓 Student Management</p>
+
 </header>
+
 
 <div class="container">
 
-    <div class="student">
-        <h2>👤 Rahul Kumar</h2>
+    <h2>Registered Students</h2>
 
-        <p class="info">
-            <b>Student ID:</b> UHS001
-        </p>
-
-        <p class="info">
-            <b>Class:</b> 12th
-        </p>
-
-        <p class="info">
-            <b>Stream:</b> Science
-        </p>
-
-        <span class="status">Active</span>
-    </div>
-
-    <div class="student">
-        <h2>👤 Aman Kumar</h2>
-
-        <p class="info">
-            <b>Student ID:</b> UHS002
-        </p>
-
-        <p class="info">
-            <b>Class:</b> 12th
-        </p>
-
-        <p class="info">
-            <b>Stream:</b> Science
-        </p>
-
-        <span class="status">Active</span>
-    </div>
-
-    <div class="student">
-        <h2>👤 Priya Kumari</h2>
-
-        <p class="info">
-            <b>Student ID:</b> UHS003
-        </p>
-
-        <p class="info">
-            <b>Class:</b> 12th
-        </p>
-
-        <p class="info">
-            <b>Stream:</b> Science
-        </p>
-
-        <span class="status">Active</span>
-    </div>
+    <div id="studentList"></div>
 
 </div>
 
-<a class="back" href="admin.html">← Admin Dashboard</a>
+
+<a class="back" href="admin-dashboard.html">
+    ← Back to Principal Dashboard
+</a>
+
+
+<script>
+
+/* ADMIN LOGIN CHECK */
+
+let adminLoggedIn =
+localStorage.getItem("adminLoggedIn");
+
+if (adminLoggedIn !== "true") {
+
+    alert("Please Principal Login karein.");
+
+    window.location.href =
+        "admin-login.html";
+
+}
+
+
+/* LOAD STUDENTS */
+
+function loadStudents() {
+
+    let students =
+        JSON.parse(
+            localStorage.getItem("students")
+        ) || [];
+
+    let list =
+        document.getElementById("studentList");
+
+
+    list.innerHTML = "";
+
+
+    if (students.length === 0) {
+
+        list.innerHTML = `
+            <div class="empty">
+                <h3>👨‍🎓 No Students</h3>
+                <p>
+                    Abhi tak koi student registered nahi hai.
+                </p>
+            </div>
+        `;
+
+        return;
+    }
+
+
+    students.forEach(function(student, index) {
+
+        let div =
+            document.createElement("div");
+
+        div.className = "card";
+
+
+        div.innerHTML = `
+
+            <div class="student-name">
+                👨‍🎓 ${student.name}
+            </div>
+
+            <div class="info">
+                🆔 Student ID:
+                <b>${student.studentId}</b>
+            </div>
+
+            <div class="info">
+                📧 Email:
+                ${student.email}
+            </div>
+
+            <button
+                class="delete"
+                onclick="deleteStudent(${index})">
+
+                🗑️ Delete Student
+
+            </button>
+
+        `;
+
+
+        list.appendChild(div);
+
+    });
+
+}
+
+
+/* DELETE STUDENT */
+
+function deleteStudent(index) {
+
+    let students =
+        JSON.parse(
+            localStorage.getItem("students")
+        ) || [];
+
+
+    let studentName =
+        students[index].name;
+
+
+    let confirmDelete =
+        confirm(
+            "Kya aap " +
+            studentName +
+            " ko delete karna chahte hain?"
+        );
+
+
+    if (!confirmDelete) {
+
+        return;
+
+    }
+
+
+    students.splice(index, 1);
+
+
+    localStorage.setItem(
+        "students",
+        JSON.stringify(students)
+    );
+
+
+    loadStudents();
+
+}
+
+
+/* START */
+
+loadStudents();
+
+</script>
 
 </body>
 </html>

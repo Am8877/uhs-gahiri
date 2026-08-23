@@ -7,92 +7,92 @@
 <title>Student Dashboard - UHS GAHIRI</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #eef5ff;
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#eef5ff;
 }
 
-header {
-    background: #0757a0;
-    color: white;
-    text-align: center;
-    padding: 20px;
+header{
+    background:#0757a0;
+    color:white;
+    text-align:center;
+    padding:20px;
 }
 
-header h1 {
-    margin: 0;
+header h1{
+    margin:0;
 }
 
-header p {
-    margin: 8px 0 0;
+header p{
+    margin:8px 0 0;
 }
 
-.welcome {
-    background: white;
-    width: 90%;
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    box-sizing: border-box;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px #ccc;
+.welcome{
+    background:white;
+    width:90%;
+    max-width:600px;
+    margin:20px auto;
+    padding:20px;
+    box-sizing:border-box;
+    border-radius:12px;
+    box-shadow:0 3px 10px #ccc;
 }
 
-.welcome h2 {
-    color: #0757a0;
-    margin-top: 0;
+.welcome h2{
+    color:#0757a0;
+    margin-top:0;
 }
 
-.menu {
-    width: 90%;
-    max-width: 600px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
+.menu{
+    width:90%;
+    max-width:600px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
 }
 
-.card {
-    background: white;
-    padding: 25px 10px;
-    text-align: center;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px #ccc;
-    cursor: pointer;
-    font-weight: bold;
-    color: #0757a0;
-    transition: 0.2s;
+.card{
+    background:white;
+    padding:25px 10px;
+    text-align:center;
+    border-radius:12px;
+    box-shadow:0 3px 10px #ccc;
+    cursor:pointer;
+    font-weight:bold;
+    color:#0757a0;
 }
 
-.card:hover {
-    transform: scale(1.03);
+.card:hover{
+    transform:scale(1.03);
 }
 
-.icon {
-    font-size: 35px;
-    display: block;
-    margin-bottom: 10px;
+.icon{
+    font-size:35px;
+    display:block;
+    margin-bottom:10px;
 }
 
-.logout {
-    display: block;
-    width: 180px;
-    margin: 25px auto;
-    padding: 12px;
-    background: #d32f2f;
-    color: white;
-    border: none;
-    border-radius: 7px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
+.logout{
+    display:block;
+    width:180px;
+    margin:25px auto;
+    padding:12px;
+    background:#d32f2f;
+    color:white;
+    border:none;
+    border-radius:7px;
+    font-size:16px;
+    font-weight:bold;
 }
 
-@media (max-width: 450px) {
-    .menu {
-        grid-template-columns: 1fr;
+@media(max-width:450px){
+
+    .menu{
+        grid-template-columns:1fr;
     }
+
 }
 </style>
 </head>
@@ -100,97 +100,300 @@ header p {
 <body>
 
 <header>
+
     <h1>UHS GAHIRI</h1>
+
     <p>🎓 Student Dashboard</p>
+
 </header>
+
 
 <div class="welcome">
 
-    <h2>Welcome, <span id="studentName">Student</span> 👋</h2>
+    <h2>
+        Welcome,
+        <span id="studentName">
+            Student
+        </span>
+        👋
+    </h2>
+
 
     <p>
         Student ID:
         <b id="studentID">---</b>
     </p>
 
+
     <p>
-        Class: <b>12th</b> |
-        Stream: <b>Science</b>
+        Class:
+        <b id="studentClass">---</b>
+    </p>
+
+
+    <p id="streamRow">
+        Stream:
+        <b id="studentStream">---</b>
     </p>
 
 </div>
 
+
 <div class="menu">
 
-    <div class="card" onclick="openPage('profile.html')">
+
+    <!-- PROFILE -->
+
+    <div class="card"
+         onclick="openPage('profile.html')">
+
         <span class="icon">👤</span>
+
         My Profile
+
     </div>
 
-    <div class="card" onclick="openPage('subjects.html')">
+
+    <!-- SUBJECTS -->
+
+    <div class="card"
+         onclick="openPage('subjects.html')">
+
         <span class="icon">📚</span>
+
         My Subjects
+
     </div>
 
-    <div class="card" onclick="openPage('result.html')">
+
+    <!-- RESULT -->
+
+    <div class="card"
+         onclick="openPage('result.html')">
+
         <span class="icon">📝</span>
+
         Exam Result
+
     </div>
 
-    <div class="card" onclick="openPage('attendence.html')">
+
+    <!-- ATTENDANCE -->
+
+    <div class="card"
+         onclick="openPage('attendence.html')">
+
         <span class="icon">📅</span>
+
         Attendance
+
     </div>
 
-    <div class="card" onclick="openPage('notice.html')">
+
+    <!-- HOMEWORK -->
+
+    <div class="card"
+         onclick="openPage('homework.html')">
+
+        <span class="icon">📚</span>
+
+        Homework
+
+    </div>
+
+
+    <!-- NOTICE -->
+
+    <div class="card"
+         onclick="openPage('notice.html')">
+
         <span class="icon">📢</span>
+
         Notice
+
     </div>
 
-    <div class="card" onclick="openPage('contact.html')">
+
+    <!-- CONTACT -->
+
+    <div class="card"
+         onclick="openPage('contact.html')">
+
         <span class="icon">📞</span>
+
         Contact School
+
     </div>
 
 </div>
 
-<button class="logout" onclick="logout()">
+
+<button class="logout"
+        onclick="logout()">
+
     🚪 Logout
+
 </button>
+
 
 <script>
 
-let loggedIn =
-localStorage.getItem("studentLoggedIn");
+/* ================= LOGIN CHECK ================= */
 
-if (loggedIn !== "true") {
+if(
+    localStorage.getItem(
+        "studentLoggedIn"
+    ) !== "true"
+){
 
-    alert("Please Student Login karein.");
+    alert(
+        "Please Student Login karein."
+    );
 
-    window.location.href = "login.html";
+    window.location.href =
+        "login.html";
+
 }
+
+
+/* ================= STUDENT DATA ================= */
+
+let studentName =
+    localStorage.getItem(
+        "studentName"
+    ) || "Student";
+
 
 let studentID =
-localStorage.getItem("studentID");
+    localStorage.getItem(
+        "studentID"
+    ) || "---";
 
-if (studentID) {
 
-    document.getElementById("studentID").innerText =
+let studentClass =
+    localStorage.getItem(
+        "studentClass"
+    );
+
+
+let studentStream =
+    localStorage.getItem(
+        "studentStream"
+    );
+
+
+/* ================= NAME ================= */
+
+document.getElementById(
+    "studentName"
+).innerText =
+    studentName;
+
+
+/* ================= ID ================= */
+
+document.getElementById(
+    "studentID"
+).innerText =
     studentID;
+
+
+/* ================= CLASS ================= */
+
+if(studentClass){
+
+    document.getElementById(
+        "studentClass"
+    ).innerText =
+        studentClass + "th";
+
 }
 
-function openPage(page) {
 
-    window.location.href = page;
+/* ================= STREAM ================= */
+
+if(
+    studentClass === "11" ||
+    studentClass === "12"
+){
+
+    document.getElementById(
+        "studentStream"
+    ).innerText =
+        getStreamName(studentStream);
+
+}else{
+
+    document.getElementById(
+        "streamRow"
+    ).style.display =
+        "none";
 
 }
 
-function logout() {
 
-    localStorage.removeItem("studentLoggedIn");
-    localStorage.removeItem("studentID");
+/* ================= STREAM NAME ================= */
 
-    window.location.href = "login.html";
+function getStreamName(stream){
+
+    if(stream === "science"){
+        return "Science";
+    }
+
+    if(stream === "arts"){
+        return "Arts";
+    }
+
+    if(stream === "commerce"){
+        return "Commerce";
+    }
+
+    return "---";
+
+}
+
+
+/* ================= OPEN PAGE ================= */
+
+function openPage(page){
+
+    window.location.href =
+        page;
+
+}
+
+
+/* ================= LOGOUT ================= */
+
+function logout(){
+
+    localStorage.removeItem(
+        "studentLoggedIn"
+    );
+
+    localStorage.removeItem(
+        "studentID"
+    );
+
+    localStorage.removeItem(
+        "studentName"
+    );
+
+    localStorage.removeItem(
+        "studentEmail"
+    );
+
+    localStorage.removeItem(
+        "studentClass"
+    );
+
+    localStorage.removeItem(
+        "studentStream"
+    );
+
+
+    window.location.href =
+        "login.html";
 
 }
 

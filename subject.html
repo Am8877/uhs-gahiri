@@ -7,63 +7,84 @@
 <title>My Subjects - UHS GAHIRI</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #eef5ff;
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#eef5ff;
 }
 
-header {
-    background: #0757a0;
-    color: white;
-    text-align: center;
-    padding: 20px;
+header{
+    background:#0757a0;
+    color:white;
+    text-align:center;
+    padding:20px;
 }
 
-.subjects {
-    width: 90%;
-    max-width: 600px;
-    margin: 25px auto;
+header h1{
+    margin:0;
 }
 
-.subject {
-    background: white;
-    margin: 15px 0;
-    padding: 18px;
-    border-radius: 10px;
-    box-shadow: 0 3px 8px #ccc;
-    display: flex;
-    align-items: center;
+.container{
+    width:92%;
+    max-width:650px;
+    margin:20px auto;
 }
 
-.icon {
-    font-size: 32px;
-    width: 55px;
+.info{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 3px 10px #ccc;
+    margin-bottom:20px;
 }
 
-.subject h3 {
-    margin: 0;
-    color: #0757a0;
+.info h2{
+    color:#0757a0;
+    margin-top:0;
 }
 
-.subject p {
-    margin: 5px 0 0;
-    color: #555;
+.subject{
+    background:white;
+    margin-bottom:12px;
+    padding:18px;
+    border-radius:10px;
+    box-shadow:0 3px 8px #ccc;
+    font-size:18px;
+    font-weight:bold;
+    color:#0757a0;
 }
 
-.back {
-    display: block;
-    width: 180px;
-    margin: 25px auto;
-    padding: 12px;
-    text-align: center;
-    background: #0757a0;
-    color: white;
-    border: none;
-    border-radius: 7px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
+.number{
+    display:inline-block;
+    width:35px;
+    height:35px;
+    line-height:35px;
+    text-align:center;
+    background:#0757a0;
+    color:white;
+    border-radius:50%;
+    margin-right:10px;
+}
+
+.empty{
+    background:white;
+    padding:25px;
+    text-align:center;
+    border-radius:12px;
+    color:#777;
+}
+
+.back{
+    display:block;
+    width:230px;
+    margin:25px auto;
+    padding:12px;
+    background:#333;
+    color:white;
+    text-align:center;
+    text-decoration:none;
+    border-radius:7px;
+    font-weight:bold;
 }
 </style>
 </head>
@@ -75,76 +96,275 @@ header {
     <p>📚 My Subjects</p>
 </header>
 
-<div class="subjects">
 
-    <div class="subject">
-        <div class="icon">⚛️</div>
-        <div>
-            <h3>Physics</h3>
-            <p>Science Subject</p>
-        </div>
-    </div>
+<div class="container">
 
-    <div class="subject">
-        <div class="icon">🧪</div>
-        <div>
-            <h3>Chemistry</h3>
-            <p>Science Subject</p>
-        </div>
-    </div>
+<div class="info">
 
-    <div class="subject">
-        <div class="icon">🧬</div>
-        <div>
-            <h3>Biology</h3>
-            <p>Science Subject</p>
-        </div>
-    </div>
+    <h2>🎓 Student Information</h2>
 
-    <div class="subject">
-        <div class="icon">📖</div>
-        <div>
-            <h3>Hindi</h3>
-            <p>Language Subject</p>
-        </div>
-    </div>
+    <p>
+        Name:
+        <b id="name">Student</b>
+    </p>
 
-    <div class="subject">
-        <div class="icon">🔤</div>
-        <div>
-            <h3>English</h3>
-            <p>Language Subject</p>
-        </div>
-    </div>
+    <p>
+        Student ID:
+        <b id="id">---</b>
+    </p>
 
-    <div class="subject">
-        <div class="icon">💻</div>
-        <div>
-            <h3>Computer</h3>
-            <p>Additional Subject</p>
-        </div>
-    </div>
+    <p>
+        Class:
+        <b id="className">---</b>
+    </p>
+
+    <p id="streamRow">
+        Stream:
+        <b id="streamName">---</b>
+    </p>
 
 </div>
 
-<button class="back" onclick="goDashboard()">
-    ← Dashboard
-</button>
+
+<h2 style="color:#0757a0;">
+    📖 Your Subjects
+</h2>
+
+<div id="subjectList"></div>
+
+</div>
+
+
+<a class="back" href="dashboard.html">
+← Back to Dashboard
+</a>
+
 
 <script>
 
-let loggedIn =
-localStorage.getItem("studentLoggedIn");
+/* ================= LOGIN CHECK ================= */
 
-if (loggedIn !== "true") {
+if(
+    localStorage.getItem("studentLoggedIn")
+    !== "true"
+){
 
     alert("Please Student Login karein.");
 
-    window.location.href = "login.html";
+    window.location.href="login.html";
+
 }
 
-function goDashboard() {
-    window.location.href = "dashboard.html";
+
+/* ================= STUDENT DATA ================= */
+
+let name =
+    localStorage.getItem("studentName")
+    || "Student";
+
+let id =
+    localStorage.getItem("studentID")
+    || "---";
+
+let studentClass =
+    localStorage.getItem("studentClass");
+
+let stream =
+    localStorage.getItem("studentStream");
+
+
+document.getElementById("name").innerText =
+    name;
+
+document.getElementById("id").innerText =
+    id;
+
+
+/* ================= STREAM NAME ================= */
+
+function streamName(value){
+
+    if(value === "science"){
+        return "Science";
+    }
+
+    if(value === "arts"){
+        return "Arts";
+    }
+
+    if(value === "commerce"){
+        return "Commerce";
+    }
+
+    return "---";
+}
+
+
+/* ================= CLASS ================= */
+
+if(studentClass){
+
+    document.getElementById(
+        "className"
+    ).innerText =
+        studentClass + "th";
+
+}
+
+
+/* ================= SUBJECT DATA ================= */
+
+const subjects = {
+
+    "9":[
+        "Mathematics",
+        "Hindi",
+        "English",
+        "Geography",
+        "History",
+        "Science"
+    ],
+
+    "10":[
+        "Mathematics",
+        "Hindi",
+        "English",
+        "Geography",
+        "History",
+        "Science"
+    ],
+
+    "11-science":[
+        "Physics",
+        "Chemistry",
+        "Mathematics",
+        "Biology",
+        "English"
+    ],
+
+    "12-science":[
+        "Physics",
+        "Chemistry",
+        "Mathematics",
+        "Biology",
+        "English"
+    ],
+
+    "11-arts":[
+        "Hindi",
+        "English",
+        "History",
+        "Geography",
+        "Political Science"
+    ],
+
+    "12-arts":[
+        "Hindi",
+        "English",
+        "History",
+        "Geography",
+        "Political Science"
+    ],
+
+    "11-commerce":[
+        "Accountancy",
+        "Business Studies",
+        "Economics",
+        "Mathematics",
+        "English"
+    ],
+
+    "12-commerce":[
+        "Accountancy",
+        "Business Studies",
+        "Economics",
+        "Mathematics",
+        "English"
+    ]
+
+};
+
+
+/* ================= FIND SUBJECTS ================= */
+
+let key = studentClass;
+
+
+if(
+    studentClass === "11" ||
+    studentClass === "12"
+){
+
+    key =
+        studentClass +
+        "-" +
+        stream;
+
+
+    document.getElementById(
+        "streamName"
+    ).innerText =
+        streamName(stream);
+
+}else{
+
+    document.getElementById(
+        "streamRow"
+    ).style.display =
+        "none";
+
+}
+
+
+/* ================= DISPLAY ================= */
+
+let list =
+    document.getElementById(
+        "subjectList"
+    );
+
+
+let mySubjects =
+    subjects[key] || [];
+
+
+if(mySubjects.length === 0){
+
+    list.innerHTML = `
+        <div class="empty">
+            📚 Subjects उपलब्ध नहीं हैं।
+            <br><br>
+            कृपया Student Registration में
+            Class/Stream check करें।
+        </div>
+    `;
+
+}else{
+
+    mySubjects.forEach(
+        function(subject,index){
+
+            let div =
+                document.createElement("div");
+
+            div.className =
+                "subject";
+
+            div.innerHTML = `
+
+                <span class="number">
+                    ${index + 1}
+                </span>
+
+                ${subject}
+
+            `;
+
+            list.appendChild(div);
+
+        }
+    );
+
 }
 
 </script>

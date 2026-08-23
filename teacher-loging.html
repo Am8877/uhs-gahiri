@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Principal Login - UHS GAHIRI</title>
+<title>Teacher Login - UHS GAHIRI</title>
 
 <style>
 body {
@@ -17,7 +17,7 @@ body {
     width: 90%;
     max-width: 380px;
     background: white;
-    margin: 80px auto;
+    margin: 70px auto;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 15px #bbb;
@@ -25,6 +25,11 @@ body {
 }
 
 h1 {
+    text-align: center;
+    color: #0757a0;
+}
+
+h2 {
     text-align: center;
     color: #333;
 }
@@ -53,13 +58,12 @@ button {
     width: 100%;
     padding: 14px;
     margin-top: 25px;
-    background: #333;
+    background: #0757a0;
     color: white;
     border: none;
     border-radius: 7px;
     font-size: 16px;
     font-weight: bold;
-    cursor: pointer;
 }
 
 .error {
@@ -88,16 +92,18 @@ button {
 
 <h1>UHS GAHIRI</h1>
 
-<p>👨‍🏫 Principal Login</p>
+<h2>👨‍🏫 Teacher Login</h2>
 
-<form id="adminForm">
+<p>Login with your Teacher ID</p>
 
-<label>Principal ID</label>
+<form id="teacherLoginForm">
+
+<label>Teacher ID</label>
 
 <input
 type="text"
-id="adminId"
-placeholder="Enter Principal ID"
+id="teacherId"
+placeholder="Example: T001"
 required
 >
 
@@ -105,19 +111,19 @@ required
 
 <input
 type="password"
-id="adminPassword"
+id="teacherPassword"
 placeholder="Enter Password"
 required
 >
 
 <button type="submit">
-🔐 Principal Login
+🔐 Teacher Login
 </button>
 
 </form>
 
-<div class="error" id="error">
-❌ Principal ID या Password गलत है!
+<div class="error" id="loginError">
+❌ Teacher ID या Password गलत है!
 </div>
 
 <a class="back" href="index.html">
@@ -129,40 +135,89 @@ required
 
 <script>
 
-document.getElementById("adminForm")
-.addEventListener("submit", function(event) {
+document.getElementById(
+    "teacherLoginForm"
+).addEventListener(
+"submit",
+function(event) {
 
     event.preventDefault();
 
-    let id =
-    document.getElementById("adminId").value.trim();
+
+    let teacherId =
+        document.getElementById(
+            "teacherId"
+        ).value.trim();
+
 
     let password =
-    document.getElementById("adminPassword").value;
+        document.getElementById(
+            "teacherPassword"
+        ).value;
 
 
-    /*
-      DEMO PRINCIPAL LOGIN
-      ID: principal
-      Password: 1234
-    */
+    /* GET TEACHERS */
 
-    if (id === "principal" && password === "1234") {
+    let teachers =
+        JSON.parse(
+            localStorage.getItem(
+                "schoolTeachers"
+            )
+        ) || [];
+
+
+    /* FIND TEACHER */
+
+    let teacher =
+        teachers.find(function(item) {
+
+            return (
+                item.teacherId === teacherId &&
+                item.password === password
+            );
+
+        });
+
+
+    if (teacher) {
+
+        /* SAVE LOGIN */
 
         localStorage.setItem(
-            "adminLoggedIn",
+            "teacherLoggedIn",
             "true"
         );
 
-        alert("Principal Login Successful! ✅");
+        localStorage.setItem(
+            "teacherId",
+            teacher.teacherId
+        );
+
+        localStorage.setItem(
+            "teacherName",
+            teacher.name
+        );
+
+        localStorage.setItem(
+            "teacherEmail",
+            teacher.email
+        );
+
+
+        alert(
+            "Teacher Login Successful! ✅"
+        );
+
 
         window.location.href =
-            "admin-dashboard.html";
+            "teacher-dashboard.html";
+
 
     } else {
 
-        document.getElementById("error")
-        .style.display = "block";
+        document.getElementById(
+            "loginError"
+        ).style.display = "block";
 
     }
 

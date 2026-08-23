@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Teacher Dashboard - UHS GAHIRI</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef5ff;
+}
+
+header {
+    background: #0757a0;
+    color: white;
+    text-align: center;
+    padding: 22px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header p {
+    margin: 8px 0 0;
+}
+
+.welcome {
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #ccc;
+}
+
+.welcome h2 {
+    color: #0757a0;
+    margin-top: 0;
+}
+
+.menu {
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.card {
+    background: white;
+    padding: 25px 10px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #ccc;
+    color: #0757a0;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.icon {
+    display: block;
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.logout {
+    display: block;
+    width: 180px;
+    margin: 25px auto;
+    padding: 13px;
+    background: #d32f2f;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+@media(max-width:450px) {
+    .menu {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>UHS GAHIRI</h1>
+    <p>👨‍🏫 Teacher Dashboard</p>
+</header>
+
+
+<div class="welcome">
+
+    <h2>
+        Welcome,
+        <span id="teacherName">Teacher</span>
+        👋
+    </h2>
+
+    <p>
+        Teacher ID:
+        <b id="teacherId">---</b>
+    </p>
+
+    <p>
+        Email:
+        <b id="teacherEmail">---</b>
+    </p>
+
+</div>
+
+
+<div class="menu">
+
+    <div class="card"
+         onclick="openPage('teacher-attendance.html')">
+
+        <span class="icon">📅</span>
+
+        Student Attendance
+
+    </div>
+
+
+    <div class="card"
+         onclick="openPage('teacher-homework.html')">
+
+        <span class="icon">📚</span>
+
+        Homework
+
+    </div>
+
+
+    <div class="card"
+         onclick="openPage('teacher-result.html')">
+
+        <span class="icon">📝</span>
+
+        Exam Result
+
+    </div>
+
+
+    <div class="card"
+         onclick="openPage('teacher-notice.html')">
+
+        <span class="icon">📢</span>
+
+        Notice
+
+    </div>
+
+
+    <div class="card"
+         onclick="showStudents()">
+
+        <span class="icon">👨‍🎓</span>
+
+        Students
+
+    </div>
+
+</div>
+
+
+<button class="logout"
+        onclick="logout()">
+
+    🚪 Logout
+
+</button>
+
+
+<script>
+
+/* ================= TEACHER LOGIN CHECK ================= */
+
+if (
+    localStorage.getItem("teacherLoggedIn")
+    !== "true"
+) {
+
+    alert("Please Teacher Login karein.");
+
+    window.location.href =
+        "teacher-login.html";
+}
+
+
+/* ================= TEACHER DATA ================= */
+
+let teacherName =
+    localStorage.getItem("teacherName");
+
+let teacherId =
+    localStorage.getItem("teacherId");
+
+let teacherEmail =
+    localStorage.getItem("teacherEmail");
+
+
+if (teacherName) {
+
+    document.getElementById(
+        "teacherName"
+    ).innerText = teacherName;
+
+}
+
+
+if (teacherId) {
+
+    document.getElementById(
+        "teacherId"
+    ).innerText = teacherId;
+
+}
+
+
+if (teacherEmail) {
+
+    document.getElementById(
+        "teacherEmail"
+    ).innerText = teacherEmail;
+
+}
+
+
+/* ================= OPEN PAGE ================= */
+
+function openPage(page) {
+
+    window.location.href = page;
+
+}
+
+
+/* ================= STUDENTS ================= */
+
+function showStudents

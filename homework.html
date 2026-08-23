@@ -4,80 +4,87 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Homework - UHS GAHIRI</title>
+<title>Student Homework - UHS GAHIRI</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #eef5ff;
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#eef5ff;
 }
 
-header {
-    background: #0757a0;
-    color: white;
-    text-align: center;
-    padding: 22px;
+header{
+    background:#0757a0;
+    color:white;
+    text-align:center;
+    padding:20px;
 }
 
-.container {
-    padding: 20px;
+header h1{
+    margin:0;
 }
 
-.homework {
-    background: white;
-    padding: 18px;
-    margin-bottom: 15px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px #ccc;
+.container{
+    width:94%;
+    max-width:700px;
+    margin:20px auto;
 }
 
-.homework h2 {
-    color: #0757a0;
-    margin-top: 0;
+.info{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 3px 10px #ccc;
+    margin-bottom:20px;
 }
 
-.date {
-    color: #777;
-    font-size: 14px;
+.info h2{
+    color:#0757a0;
+    margin-top:0;
 }
 
-.status {
-    display: inline-block;
-    background: #fff3cd;
-    color: #856404;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-weight: bold;
-    margin-top: 8px;
+.homework{
+    background:white;
+    padding:20px;
+    margin-bottom:15px;
+    border-radius:12px;
+    box-shadow:0 3px 10px #ccc;
+    border-left:5px solid #0757a0;
 }
 
-.completed {
-    background: #d4edda;
-    color: green;
+.homework h3{
+    color:#0757a0;
+    margin-top:0;
 }
 
-button {
-    margin-top: 12px;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 6px;
-    background: #0757a0;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+.date{
+    color:#666;
+    font-size:14px;
 }
 
-.back {
-    display: block;
-    width: 180px;
-    margin: 25px auto;
-    padding: 12px;
-    text-align: center;
-    background: #0757a0;
-    color: white;
-    text-decoration: none;
-    border-radius: 7px;
+.teacher{
+    color:#555;
+}
+
+.empty{
+    background:white;
+    padding:25px;
+    text-align:center;
+    border-radius:12px;
+    box-shadow:0 3px 10px #ccc;
+}
+
+.back{
+    display:block;
+    width:230px;
+    margin:25px auto;
+    padding:12px;
+    background:#333;
+    color:white;
+    text-align:center;
+    text-decoration:none;
+    border-radius:7px;
+    font-weight:bold;
 }
 </style>
 </head>
@@ -86,92 +93,248 @@ button {
 
 <header>
     <h1>UHS GAHIRI</h1>
-    <p>Student Homework</p>
+    <p>📚 My Homework</p>
 </header>
+
 
 <div class="container">
 
-    <div class="homework">
-        <h2>📘 Physics</h2>
-        <p class="date">Date: 23 August 2026</p>
-        <p>Chapter 1 ke questions 1 se 10 tak solve karein.</p>
+<div class="info">
 
-        <div class="status" id="status1">⏳ Pending</div>
+    <h2>🎓 Student Information</h2>
 
-        <br>
+    <p>
+        Name:
+        <b id="studentName">Student</b>
+    </p>
 
-        <button type="button" onclick="completeHomework('status1', this)">
-            ✅ Mark as Completed
-        </button>
-    </div>
+    <p>
+        Student ID:
+        <b id="studentID">---</b>
+    </p>
 
+    <p>
+        Class:
+        <b id="studentClass">12th</b>
+    </p>
 
-    <div class="homework">
-        <h2>🧪 Chemistry</h2>
-        <p class="date">Date: 23 August 2026</p>
-        <p>Chapter 2 ke important questions likhein.</p>
-
-        <div class="status" id="status2">⏳ Pending</div>
-
-        <br>
-
-        <button type="button" onclick="completeHomework('status2', this)">
-            ✅ Mark as Completed
-        </button>
-    </div>
-
-
-    <div class="homework">
-        <h2>🧬 Biology</h2>
-        <p class="date">Date: 23 August 2026</p>
-        <p>Cell chapter ka diagram banayein aur label karein.</p>
-
-        <div class="status" id="status3">⏳ Pending</div>
-
-        <br>
-
-        <button type="button" onclick="completeHomework('status3', this)">
-            ✅ Mark as Completed
-        </button>
-    </div>
-
-
-    <div class="homework">
-        <h2>💻 Computer</h2>
-        <p class="date">Date: 23 August 2026</p>
-        <p>Binary number system ke 10 questions practice karein.</p>
-
-        <div class="status" id="status4">⏳ Pending</div>
-
-        <br>
-
-        <button type="button" onclick="completeHomework('status4', this)">
-            ✅ Mark as Completed
-        </button>
-    </div>
+    <p id="streamText">
+        Stream:
+        <b id="studentStream">Science</b>
+    </p>
 
 </div>
 
+
+<h2 style="color:#0757a0;">
+    📝 Homework
+</h2>
+
+<div id="homeworkList"></div>
+
+</div>
+
+
 <a class="back" href="dashboard.html">
-    ← Dashboard
+← Back to Student Dashboard
 </a>
 
 
 <script>
 
-function completeHomework(statusId, button) {
+/* ================= LOGIN CHECK ================= */
 
-    var status = document.getElementById(statusId);
+if(
+    localStorage.getItem("studentLoggedIn")
+    !== "true"
+){
 
-    status.innerHTML = "✅ Completed";
+    alert("Please Student Login karein.");
 
-    status.classList.add("completed");
-
-    button.innerHTML = "✔ Completed";
-
-    button.disabled = true;
+    window.location.href="login.html";
 
 }
+
+
+/* ================= STUDENT DATA ================= */
+
+let studentName =
+    localStorage.getItem("studentName");
+
+let studentID =
+    localStorage.getItem("studentID");
+
+
+if(studentName){
+
+    document.getElementById(
+        "studentName"
+    ).innerText = studentName;
+
+}
+
+
+if(studentID){
+
+    document.getElementById(
+        "studentID"
+    ).innerText = studentID;
+
+}
+
+
+/*
+    अभी default Class 12 Science
+    रखी गई है।
+*/
+
+let studentClass =
+    localStorage.getItem("studentClass") || "12";
+
+let studentStream =
+    localStorage.getItem("studentStream") || "science";
+
+
+document.getElementById(
+    "studentClass"
+).innerText =
+    studentClass + "th";
+
+
+/* ================= STREAM ================= */
+
+if(
+    studentClass === "11" ||
+    studentClass === "12"
+){
+
+    document.getElementById(
+        "studentStream"
+    ).innerText =
+        studentStream;
+
+}else{
+
+    document.getElementById(
+        "streamText"
+    ).style.display="none";
+
+}
+
+
+/* ================= LOAD HOMEWORK ================= */
+
+function loadHomework(){
+
+    let allHomework =
+        JSON.parse(
+            localStorage.getItem(
+                "schoolHomework"
+            )
+        ) || [];
+
+
+    let list =
+        document.getElementById(
+            "homeworkList"
+        );
+
+
+    list.innerHTML="";
+
+
+    /* Filter */
+
+    let homework =
+        allHomework.filter(function(item){
+
+            if(
+                studentClass === "11" ||
+                studentClass === "12"
+            ){
+
+                return(
+                    item.className === studentClass &&
+                    item.stream === studentStream
+                );
+
+            }else{
+
+                return(
+                    item.className === studentClass
+                );
+
+            }
+
+        });
+
+
+    /* No homework */
+
+    if(homework.length === 0){
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                📚 अभी आपकी Class के लिए
+                कोई Homework नहीं है।
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* Show homework */
+
+    homework.forEach(function(item){
+
+        let div =
+            document.createElement("div");
+
+        div.className="homework";
+
+
+        div.innerHTML = `
+
+            <h3>
+                📚 ${item.subject}
+            </h3>
+
+            <p class="date">
+                📅 Date: ${item.date}
+            </p>
+
+            <p>
+                📝 <b>Homework:</b>
+            </p>
+
+            <p>
+                ${item.text}
+            </p>
+
+            <p class="teacher">
+                👨‍🏫 Teacher:
+                <b>${item.teacherName}</b>
+            </p>
+
+        `;
+
+
+        list.appendChild(div);
+
+    });
+
+}
+
+
+/* ================= START ================= */
+
+loadHomework();
 
 </script>
 

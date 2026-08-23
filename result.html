@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Attendance - UHS GAHIRI</title>
+<title>Exam Result - UHS GAHIRI</title>
 
 <style>
 body {
@@ -20,57 +20,80 @@ header {
     padding: 20px;
 }
 
-.attendance {
-    width: 90%;
-    max-width: 600px;
+.container {
+    width: 92%;
+    max-width: 700px;
     margin: 25px auto;
+}
+
+.card {
     background: white;
     padding: 20px;
-    box-sizing: border-box;
+    margin-bottom: 15px;
     border-radius: 12px;
     box-shadow: 0 3px 10px #ccc;
 }
 
 h2 {
-    text-align: center;
     color: #0757a0;
 }
 
-.box {
-    margin: 15px 0;
-    padding: 18px;
-    background: #f5f9ff;
-    border-radius: 10px;
-    border-left: 5px solid #0757a0;
+.info {
+    line-height: 1.8;
 }
 
-.box b {
-    color: #0757a0;
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
 }
 
-.percent {
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
     text-align: center;
-    margin-top: 20px;
-    padding: 20px;
+}
+
+th {
     background: #0757a0;
     color: white;
-    border-radius: 10px;
-    font-size: 25px;
+}
+
+.pass {
+    color: green;
     font-weight: bold;
+}
+
+.empty {
+    text-align: center;
+    color: #777;
+    padding: 20px;
+}
+
+.summary {
+    text-align: center;
+    background: #eef5ff;
+    padding: 18px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.summary b {
+    font-size: 25px;
+    color: #0757a0;
 }
 
 .back {
     display: block;
-    width: 180px;
+    width: 200px;
     margin: 25px auto;
     padding: 12px;
     background: #0757a0;
     color: white;
-    border: none;
+    text-align: center;
+    text-decoration: none;
     border-radius: 7px;
-    font-size: 16px;
     font-weight: bold;
-    cursor: pointer;
 }
 </style>
 </head>
@@ -79,44 +102,48 @@ h2 {
 
 <header>
     <h1>UHS GAHIRI</h1>
-    <p>📅 Student Attendance</p>
+    <p>📝 My Exam Result</p>
 </header>
 
-<div class="attendance">
+<div class="container">
 
-    <h2>My Attendance</h2>
+    <div class="card">
 
-    <div class="box">
-        <b>Student ID:</b>
-        <span id="studentID">---</span>
+        <h2>👨‍🎓 Student Information</h2>
+
+        <div class="info">
+            <b>Name:</b>
+            <span id="studentName">Student</span>
+            <br>
+
+            <b>Student ID:</b>
+            <span id="studentID">---</span>
+            <br>
+
+            <b>Class:</b> 12th
+        </div>
+
     </div>
 
-    <div class="box">
-        <b>Total Classes:</b>
-        <span>--</span>
-    </div>
 
-    <div class="box">
-        <b>Present:</b>
-        <span>--</span>
-    </div>
+    <div class="card">
 
-    <div class="box">
-        <b>Absent:</b>
-        <span>--</span>
-    </div>
+        <h2>📊 My Result</h2>
 
-    <div class="percent">
-        Attendance: --%
+        <div id="resultArea"></div>
+
     </div>
 
 </div>
 
-<button class="back" onclick="goDashboard()">
-    ← Dashboard
-</button>
+<a class="back" href="dashboard.html">
+    ← Back to Dashboard
+</a>
+
 
 <script>
+
+/* ================= LOGIN CHECK ================= */
 
 let loggedIn =
 localStorage.getItem("studentLoggedIn");
@@ -126,19 +153,165 @@ if (loggedIn !== "true") {
     alert("Please Student Login karein.");
 
     window.location.href = "login.html";
+
 }
+
+
+/* ================= STUDENT DATA ================= */
 
 let studentID =
 localStorage.getItem("studentID");
 
-if (studentID) {
-    document.getElementById("studentID").innerText =
-    studentID;
+let studentName =
+localStorage.getItem("studentName");
+
+
+document.getElementById("studentID").innerText =
+studentID || "---";
+
+document.getElementById("studentName").innerText =
+studentName || "Student";
+
+
+/* ================= LOAD RESULT ================= */
+
+function loadResult() {
+
+    let results =
+        JSON.parse(
+            localStorage.getItem("studentResults")
+        ) || [];
+
+
+    /* Only current student's result */
+
+    let myResults =
+        results.filter(function(result) {
+
+            return result.studentId === studentID;
+
+        });
+
+
+    let area =
+        document.getElementById("resultArea");
+
+
+    area.innerHTML = "";
+
+
+    if (myResults.length === 0) {
+
+        area.innerHTML = `
+            <div class="empty">
+                📝 अभी आपका कोई result available नहीं है।
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    let totalMarks = 0;
+
+    let obtainedMarks = 0;
+
+
+    myResults.forEach(function(result) {
+
+        totalMarks += Number(result.total);
+
+        obtainedMarks += Number(result.obtained);
+
+    });
+
+
+    let percentage =
+        totalMarks > 0
+        ? (obtainedMarks / totalMarks) * 100
+        : 0;
+
+
+    let table =
+        document.createElement("table");
+
+
+    table.innerHTML = `
+        <tr>
+            <th>Subject</th>
+            <th>Marks</th>
+            <th>Percentage</th>
+        </tr>
+    `;
+
+
+    myResults.forEach(function(result) {
+
+        let percentage =
+            (result.obtained / result.total) * 100;
+
+
+        let row =
+            document.createElement("tr");
+
+
+        row.innerHTML = `
+            <td>${result.subject}</td>
+
+            <td>
+                ${result.obtained}/${result.total}
+            </td>
+
+            <td>
+                ${percentage.toFixed(1)}%
+            </td>
+        `;
+
+
+        table.appendChild(row);
+
+    });
+
+
+    area.appendChild(table);
+
+
+    let summary =
+        document.createElement("div");
+
+
+    summary.className = "summary";
+
+
+    summary.innerHTML = `
+        <p>Total Marks</p>
+
+        <b>
+            ${obtainedMarks}/${totalMarks}
+        </b>
+
+        <p>
+            Overall Percentage:
+            <strong>
+                ${percentage.toFixed(1)}%
+            </strong>
+        </p>
+
+        <p class="pass">
+            ✅ Result Available
+        </p>
+    `;
+
+
+    area.appendChild(summary);
+
 }
 
-function goDashboard() {
-    window.location.href = "dashboard.html";
-}
+
+/* ================= START ================= */
+
+loadResult();
 
 </script>
 

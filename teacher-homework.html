@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Teacher Homework - UHS GAHIRI</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#eef5ff;
+}
+
+header{
+    background:#0757a0;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+header h1{
+    margin:0;
+}
+
+.container{
+    width:94%;
+    max-width:700px;
+    margin:20px auto;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    margin-bottom:18px;
+    border-radius:12px;
+    box-shadow:0 3px 10px #ccc;
+}
+
+h2{
+    color:#0757a0;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-top:15px;
+}
+
+select,
+input,
+textarea{
+    width:100%;
+    padding:13px;
+    margin-top:7px;
+    box-sizing:border-box;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:16px;
+    background:white;
+}
+
+textarea{
+    min-height:120px;
+}
+
+button{
+    width:100%;
+    padding:13px;
+    margin-top:18px;
+    background:#0757a0;
+    color:white;
+    border:none;
+    border-radius:7px;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.delete{
+    background:#d32f2f;
+}
+
+#streamBox{
+    display:none;
+}
+
+.success{
+    display:none;
+    margin-top:15px;
+    padding:10px;
+    background:#d4edda;
+    color:#155724;
+    border-radius:7px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.record{
+    border-left:5px solid #0757a0;
+}
+
+.empty{
+    text-align:center;
+    color:#777;
+}
+
+.back{
+    display:block;
+    width:230px;
+    margin:25px auto;
+    padding:12px;
+    background:#333;
+    color:white;
+    text-align:center;
+    text-decoration:none;
+    border-radius:7px;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>UHS GAHIRI</h1>
+    <p>📚 Teacher Homework</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>➕ Add Homework</h2>
+
+<form id="homeworkForm">
+
+<label>Class</label>
+
+<select id="classSelect" required>
+    <option value="">-- Class Select करें --</option>
+    <option value="9">9th</option>
+    <option value="10">10th</option>
+    <option value="11">11th</option>
+    <option value="12">12th</option>
+</select>
+
+
+<div id="streamBox">
+
+<label>Stream</label>
+
+<select id="streamSelect">
+
+    <option value="science">🔬 Science</option>
+    <option value="arts">📚 Arts</option>
+    <option value="commerce">💼 Commerce</option>
+
+</select>
+
+</div>
+
+
+<label>Subject</label>
+
+<select id="subjectSelect" required>
+
+    <option value="">-- Subject Select करें --</option>
+
+</select>
+
+
+<label>Homework Date</label>
+
+<input
+    type="date"
+    id="homeworkDate"
+    required
+>
+
+
+<label>Homework</label>
+
+<textarea
+    id="homeworkText"
+    placeholder="Homework यहाँ लिखें..."
+    required
+></textarea>
+
+
+<button type="submit">
+    💾 Save Homework
+</button>
+
+</form>
+
+<div class="success" id="success">
+    ✅ Homework Successfully Saved!
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>📋 Homework Records</h2>
+
+<div id="records"></div>
+
+</div>
+
+</div>
+
+
+<a class="back" href="teacher-dashboard.html">
+← Back to Teacher Dashboard
+</a>
+
+
+<script>
+
+/* ================= SUBJECT LIST ================= */
+
+const subjects = {
+
+    "9": [
+        "Mathematics",
+        "Hindi",
+        "English",
+        "Geography",
+        "History",
+        "Science"
+    ],
+
+    "10": [
+        "Mathematics",
+        "Hindi",
+        "English",
+        "Geography",
+        "History",
+        "Science"
+    ],
+
+    "11-science": [
+        "Physics",
+        "Chemistry",
+        "Mathematics",
+        "Biology",
+        "English"
+    ],
+
+    "12-science": [
+        "Physics",
+        "Chemistry",
+        "Mathematics",
+        "Biology",
+        "English"
+    ],
+
+    "11-arts": [
+        "Hindi",
+        "English",
+        "History",
+        "Geography",
+        "Political Science"
+    ],
+
+    "12-arts": [
+        "Hindi",
+        "English",
+        "History",
+        "Geography",
+        "Political Science"
+    ],
+
+    "11-commerce": [
+        "Accountancy",
+        "Business Studies",
+        "Economics",
+        "Mathematics",
+        "English"
+    ],
+
+    "12-commerce": [
+        "Accountancy",
+        "Business Studies",
+        "Economics",
+        "Mathematics",
+        "English"
+    ]
+
+};
+
+
+/* ================= ELEMENTS ================= */
+
+const classSelect =
+    document.getElementById("classSelect");
+
+const streamSelect =
+    document.getElementById("streamSelect");
+
+const streamBox =
+    document.getElementById("streamBox");
+
+const subjectSelect =
+    document.getElementById("subjectSelect");
+
+
+/* ================= UPDATE PAGE ================= */
+
+function updateSubjects(){
+
+    const cls = classSelect.value;
+
+    let key = cls;
+
+
+    /* 11th और 12th में Stream */
+
+    if(cls === "11" || cls === "12"){
+
+        streamBox.style.display = "block";
+
+        key =
+            cls + "-" +
+            streamSelect.value;
+
+    }else{
+
+        streamBox.style.display = "none";
+
+    }
+
+
+    /* Subject reset */
+
+    subjectSelect.innerHTML =
+        '<option value="">-- Subject Select करें --</option>';
+
+
+    /* Subjects add */
+
+    if(subjects[key]){
+
+        subjects[key].forEach(function(subject){
+
+            const option =
+                document.createElement("option");
+
+            option.value = subject;
+
+            option.textContent = subject;
+
+            subjectSelect.appendChild(option);
+
+        });
+
+    }
+
+}
+
+
+/* ================= EVENTS ================= */
+
+classSelect.addEventListener(
+    "change",
+    updateSubjects
+);
+
+streamSelect.addEventListener(
+    "change",
+    updateSubjects
+);
+
+
+/* ================= DATE ================= */
+
+document.getElementById("homeworkDate").value =
+    new Date().toISOString().split("T")[0];
+
+
+/* ================= SAVE HOMEWORK ================= */
+
+document.getElementById("homeworkForm")
+.addEventListener("submit", function(event){
+
+    event.preventDefault();
+
+
+    const cls =
+        classSelect.value;
+
+    const stream =
+        (cls === "11" || cls === "12")
+        ? streamSelect.value
+        : "";
+
+
+    const subject =
+        subjectSelect.value;
+
+    const date =
+        document.getElementById(
+            "homeworkDate"
+        ).value;
+
+    const text =
+        document.getElementById(
+            "homeworkText"
+        ).value.trim();
+
+
+    if(!cls || !subject || !date || !text){
+
+        alert("❌ सभी जानकारी भरें।");
+
+        return;
+
+    }
+
+
+    let homework =
+        JSON.parse(
+            localStorage.getItem(
+                "schoolHomework"
+            )
+        ) || [];
+
+
+    homework.unshift({
+
+        className: cls,
+
+        stream: stream,
+
+        subject: subject,
+
+        date: date,
+
+        text: text,
+
+        teacherName:
+            localStorage.getItem(
+                "teacherName"
+            ) || "Teacher"
+
+    });
+
+
+    localStorage.setItem(
+        "schoolHomework",
+        JSON.stringify(homework)
+    );
+
+
+    document.getElementById(
+        "homeworkForm"
+    ).reset();
+
+
+    streamBox.style.display = "none";
+
+
+    subjectSelect.innerHTML =
+        '<option value="">-- Subject Select करें --</option>';
+
+
+    document.getElementById(
+        "homeworkDate"
+    ).value =
+        new Date().toISOString().split("T")[0];
+
+
+    document.getElementById(
+        "success"
+    ).style.display = "block";
+
+
+    setTimeout(function(){
+
+        document.getElementById(
+            "success"
+        ).style.display = "none";
+
+    },2000);
+
+
+    showRecords();
+
+});
+
+
+/* ================= SHOW RECORDS ================= */
+
+function showRecords(){
+
+    const records =
+        document.getElementById("records");
+
+
+    let homework =
+        JSON.parse(
+            localStorage.getItem(
+                "schoolHomework"
+            )
+        ) || [];
+
+
+    records.innerHTML = "";
+
+
+    if(homework.length === 0){
+
+        records.innerHTML =
+            '<div class="empty">📚 अभी कोई Homework नहीं है।</div>';
+
+        return;
+
+    }
+
+
+    homework.forEach(function(item,index){
+
+        let classText =
+            item.className + "th";
+
+
+        if(
+            item.className === "11" ||
+            item.className === "12"
+        ){
+
+            classText +=
+                " - " + item.stream;
+
+        }
+
+
+        const div =
+            document.createElement("div");
+
+        div.className = "card record";
+
+
+        div.innerHTML = `
+
+            <p>
+                🎓 Class:
+                <b>${classText}</b>
+            </p>
+
+            <p>
+                📚 Subject:
+                <b>${item.subject}</b>
+            </p>
+
+            <p>
+                📅 Date:
+                <b>${item.date}</b>
+            </p>
+
+            <p>
+                📝 Homework:
+            </p>
+
+            <p>${item.text}</p>
+
+            <p>
+                👨‍🏫 Teacher:
+                <b>${item.teacherName}</b>
+            </p>
+
+            <button
+                class="delete"
+                onclick="deleteHomework(${index})">
+                🗑️ Delete
+            </button>
+
+        `;
+
+
+        records.appendChild(div);
+
+    });
+
+}
+
+
+/* ================= DELETE ================= */
+
+function deleteHomework(index){
+
+    if(!confirm(
+        "Kya aap ye Homework delete karna chahte hain?"
+    )){
+
+        return;
+
+    }
+
+
+    let homework =
+        JSON.parse(
+            localStorage.getItem(
+                "schoolHomework"
+            )
+        ) || [];
+
+
+    homework.splice(index,1);
+
+
+    localStorage.setItem(
+        "schoolHomework",
+        JSON.stringify(homework)
+    );
+
+
+    showRecords();
+
+}
+
+
+/* ================= START ================= */
+
+showRecords();
+
+</script>
+
+</body>
+</html>

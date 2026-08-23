@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Principal Dashboard - UHS GAHIRI</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef5ff;
+}
+
+header {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header p {
+    margin: 8px 0 0;
+}
+
+.container {
+    width: 92%;
+    max-width: 700px;
+    margin: 25px auto;
+}
+
+.welcome {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #ccc;
+    margin-bottom: 20px;
+}
+
+.welcome h2 {
+    color: #333;
+    margin-top: 0;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.card {
+    background: white;
+    padding: 25px 10px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #ccc;
+    cursor: pointer;
+    font-weight: bold;
+    color: #333;
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+.icon {
+    display: block;
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.logout {
+    display: block;
+    width: 180px;
+    margin: 25px auto;
+    padding: 12px;
+    background: #d32f2f;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@media (max-width: 450px) {
+    .menu {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>UHS GAHIRI</h1>
+
+    <p>👨‍🏫 Principal Dashboard</p>
+
+</header>
+
+
+<div class="container">
+
+
+    <div class="welcome">
+
+        <h2>
+            Welcome, Principal 👋
+        </h2>
+
+        <p>
+            Yahan se school portal ko manage karein.
+        </p>
+
+    </div>
+
+
+    <div class="menu">
+
+
+        <div class="card"
+             onclick="openPage('students.html')">
+
+            <span class="icon">👨‍🎓</span>
+
+            Students
+
+        </div>
+
+
+        <div class="card"
+             onclick="openPage('admin-attendance.html')">
+
+            <span class="icon">📅</span>
+
+            Attendance
+
+        </div>
+
+
+        <div class="card"
+             onclick="openPage('admin-result.html')">
+
+            <span class="icon">📝</span>
+
+            Results
+
+        </div>
+
+
+        <div class="card"
+             onclick="openPage('admin-notice.html')">
+
+            <span class="icon">📢</span>
+
+            Notices
+
+        </div>
+
+
+        <div class="card"
+             onclick="openPage('admin-subjects.html')">
+
+            <span class="icon">📚</span>
+
+            Subjects
+
+        </div>
+
+
+        <div class="card"
+             onclick="openPage('admin-contact.html')">
+
+            <span class="icon">📞</span>
+
+            School Contact
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<button class="logout"
+        onclick="logout()">
+
+    🚪 Logout
+
+</button>
+
+
+<script>
+
+/* ADMIN LOGIN CHECK */
+
+let loggedIn =
+localStorage.getItem("adminLoggedIn");
+
+if (loggedIn !== "true") {
+
+    alert("Please Principal Login karein.");
+
+    window.location.href =
+        "admin-login.html";
+
+}
+
+
+/* OPEN PAGE */
+
+function openPage(page) {
+
+    window.location.href = page;
+
+}
+
+
+/* LOGOUT */
+
+function logout() {
+
+    localStorage.removeItem(
+        "adminLoggedIn"
+    );
+
+    alert("Principal Logout Successful! 👋");
+
+    window.location.href =
+        "admin-login.html";
+
+}
+
+</script>
+
+</body>
+</html>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Homework Management - UHS GAHIRI</title>
+<title>Result Management - UHS GAHIRI</title>
 
 <style>
 body {
@@ -44,20 +44,13 @@ label {
     margin-top: 12px;
 }
 
-input,
-textarea {
+input {
     width: 100%;
     padding: 12px;
     margin-top: 7px;
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 7px;
-    font-family: Arial;
-}
-
-textarea {
-    min-height: 120px;
-    resize: vertical;
 }
 
 button {
@@ -76,8 +69,9 @@ button {
     background: #d32f2f;
 }
 
-.homework {
+.result {
     border-left: 5px solid #0757a0;
+    margin-top: 12px;
 }
 
 .empty {
@@ -104,16 +98,16 @@ button {
 
 <header>
     <h1>UHS GAHIRI</h1>
-    <p>📚 Homework Management</p>
+    <p>📝 Result Management</p>
 </header>
 
 <div class="container">
 
 <div class="card">
 
-<h2>➕ Add Homework</h2>
+<h2>➕ Add Student Result</h2>
 
-<form id="homeworkForm">
+<form id="resultForm">
 
 <label>Student ID</label>
 
@@ -133,24 +127,19 @@ placeholder="Example: Physics"
 required
 >
 
-<label>Homework</label>
-
-<textarea
-id="homework"
-placeholder="Homework details likhein..."
-required
-></textarea>
-
-<label>Last Date</label>
+<label>Marks Obtained</label>
 
 <input
-type="date"
-id="lastDate"
+type="number"
+id="marks"
+placeholder="Example: 85"
+min="0"
+max="100"
 required
 >
 
 <button type="submit">
-💾 Save Homework
+💾 Save Result
 </button>
 
 </form>
@@ -160,9 +149,9 @@ required
 
 <div class="card">
 
-<h2>📋 Saved Homework</h2>
+<h2>📋 Saved Results</h2>
 
-<div id="homeworkList"></div>
+<div id="resultList"></div>
 
 </div>
 
@@ -190,30 +179,30 @@ if (
 }
 
 
-/* LOAD HOMEWORK */
+/* LOAD RESULTS */
 
-function loadHomework() {
+function loadResults() {
 
-    let homework =
+    let results =
         JSON.parse(
             localStorage.getItem(
-                "studentHomework"
+                "studentResults"
             )
         ) || [];
 
     let list =
         document.getElementById(
-            "homeworkList"
+            "resultList"
         );
 
     list.innerHTML = "";
 
 
-    if (homework.length === 0) {
+    if (results.length === 0) {
 
         list.innerHTML = `
             <div class="empty">
-                📚 अभी कोई homework नहीं है।
+                📝 अभी कोई result नहीं है।
             </div>
         `;
 
@@ -221,42 +210,38 @@ function loadHomework() {
     }
 
 
-    homework.forEach(function(item, index) {
+    results.forEach(function(item, index) {
 
         let div =
             document.createElement("div");
 
         div.className =
-            "card homework";
+            "card result";
 
         div.innerHTML = `
 
-            <h3>
-                📚 ${item.subject}
-            </h3>
-
-            <p>
+            <b>
                 👨‍🎓 Student ID:
-                <b>${item.studentId}</b>
+                ${item.studentId}
+            </b>
+
+            <p>
+                📚 Subject:
+                <b>${item.subject}</b>
             </p>
 
             <p>
-                ${item.homework}
-            </p>
-
-            <p>
-                📅 Last Date:
-                <b>${item.lastDate}</b>
+                📝 Marks:
+                <b>${item.marks}/100</b>
             </p>
 
             <button
                 class="delete"
-                onclick="deleteHomework(${index})">
+                onclick="deleteResult(${index})">
 
-                🗑️ Delete Homework
+                🗑️ Delete
 
             </button>
-
         `;
 
         list.appendChild(div);
@@ -265,10 +250,10 @@ function loadHomework() {
 }
 
 
-/* SAVE HOMEWORK */
+/* SAVE RESULT */
 
 document.getElementById(
-    "homeworkForm"
+    "resultForm"
 ).addEventListener(
 "submit",
 function(event) {
@@ -285,95 +270,100 @@ function(event) {
             "subject"
         ).value.trim();
 
-    let homeworkText =
-        document.getElementById(
-            "homework"
-        ).value.trim();
-
-    let lastDate =
-        document.getElementById(
-            "lastDate"
-        ).value;
+    let marks =
+        Number(
+            document.getElementById(
+                "marks"
+            ).value
+        );
 
 
-    let homework =
+    if (marks < 0 || marks > 100) {
+
+        alert(
+            "Marks 0 se 100 ke beech hone chahiye."
+        );
+
+        return;
+    }
+
+
+    let results =
         JSON.parse(
             localStorage.getItem(
-                "studentHomework"
+                "studentResults"
             )
         ) || [];
 
 
-    homework.unshift({
+    results.push({
 
         studentId: studentId,
 
         subject: subject,
 
-        homework: homeworkText,
-
-        lastDate: lastDate
+        marks: marks
 
     });
 
 
     localStorage.setItem(
-        "studentHomework",
-        JSON.stringify(homework)
+        "studentResults",
+        JSON.stringify(results)
     );
 
 
     document.getElementById(
-        "homeworkForm"
+        "resultForm"
     ).reset();
 
 
-    loadHomework();
+    loadResults();
 
 
     alert(
-        "Homework Saved Successfully! ✅"
+        "Result Saved Successfully! ✅"
     );
 
 });
 
 
-/* DELETE HOMEWORK */
+/* DELETE RESULT */
 
-function deleteHomework(index) {
+function deleteResult(index) {
 
     if (
         !confirm(
-            "Kya ye homework delete karna hai?"
+            "Kya ye result delete karna hai?"
         )
     ) {
         return;
     }
 
 
-    let homework =
+    let results =
         JSON.parse(
             localStorage.getItem(
-                "studentHomework"
+                "studentResults"
             )
         ) || [];
 
 
-    homework.splice(index, 1);
+    results.splice(index, 1);
 
 
     localStorage.setItem(
-        "studentHomework",
-        JSON.stringify(homework)
+        "studentResults",
+        JSON.stringify(results)
     );
 
 
-    loadHomework();
+    loadResults();
 
 }
 
 
-loadHomework();
+loadResults();
 
 </script>
 

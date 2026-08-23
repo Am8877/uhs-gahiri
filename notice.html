@@ -1,128 +1,195 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>School Notice - UHS GAHIRI</title>
+<title>School Notice - UHS GAHIRI</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #eef5ff;
-        }
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef5ff;
+}
 
-        header {
-            background: #0757a0;
-            color: white;
-            text-align: center;
-            padding: 22px;
-        }
+header {
+    background: #0757a0;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
 
-        .container {
-            padding: 20px;
-        }
+.container {
+    width: 92%;
+    max-width: 650px;
+    margin: 25px auto;
+}
 
-        .notice {
-            background: white;
-            padding: 18px;
-            margin-bottom: 15px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px #ccc;
-        }
+.notice {
+    background: white;
+    margin-bottom: 15px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #ccc;
+    border-left: 5px solid #0757a0;
+}
 
-        .notice h2 {
-            color: #0757a0;
-            margin-top: 0;
-        }
+.notice h3 {
+    margin-top: 0;
+    color: #0757a0;
+}
 
-        .date {
-            color: #777;
-            font-size: 14px;
-        }
+.date {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
 
-        .back {
-            display: block;
-            width: 180px;
-            margin: 25px auto;
-            padding: 12px;
-            text-align: center;
-            background: #0757a0;
-            color: white;
-            border: none;
-            border-radius: 7px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-    </style>
+.notice p {
+    line-height: 1.5;
+}
+
+.empty {
+    background: white;
+    padding: 25px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #ccc;
+}
+
+.back {
+    display: block;
+    width: 200px;
+    margin: 25px auto;
+    padding: 12px;
+    background: #0757a0;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 7px;
+    font-weight: bold;
+}
+</style>
 </head>
 
 <body>
 
 <header>
     <h1>UHS GAHIRI</h1>
-    <p>📢 School Notice</p>
+    <p>📢 School Notice Board</p>
 </header>
+
 
 <div class="container">
 
-    <div class="notice">
-        <h2>📢 School Notice</h2>
-
-        <p class="date">
-            23 August 2026
-        </p>
-
-        <p>
-            सभी विद्यार्थियों को सूचित किया जाता है कि
-            नियमित रूप से विद्यालय की कक्षा में उपस्थित रहें।
-        </p>
-    </div>
-
-
-    <div class="notice">
-        <h2>📢 Important Notice</h2>
-
-        <p class="date">
-            23 August 2026
-        </p>
-
-        <p>
-            विद्यार्थी अपना homework समय पर पूरा करें।
-        </p>
-    </div>
-
-
-    <div class="notice">
-        <h2>📢 परीक्षा सूचना</h2>
-
-        <p class="date">
-            23 August 2026
-        </p>
-
-        <p>
-            सभी विद्यार्थी परीक्षा की तैयारी समय पर करें
-            और विद्यालय द्वारा दिए गए निर्देशों का पालन करें।
-        </p>
-    </div>
+    <div id="noticeList"></div>
 
 </div>
 
 
-<button class="back" onclick="goDashboard()">
-    ← Dashboard
-</button>
+<a class="back" href="dashboard.html">
+    ← Back to Dashboard
+</a>
 
 
 <script>
 
-function goDashboard() {
+/* ================= LOGIN CHECK ================= */
 
-    window.location.href = "dashboard.html";
+let loggedIn =
+localStorage.getItem("studentLoggedIn");
+
+if (loggedIn !== "true") {
+
+    alert("Please Login first.");
+
+    window.location.href = "login.html";
 
 }
+
+
+/* ================= LOAD NOTICES ================= */
+
+function loadNotices() {
+
+    let notices =
+        JSON.parse(
+            localStorage.getItem("schoolNotices")
+        ) || [];
+
+    let list =
+        document.getElementById("noticeList");
+
+    list.innerHTML = "";
+
+
+    if (notices.length === 0) {
+
+        list.innerHTML = `
+            <div class="empty">
+
+                <h3>📢 No Notices</h3>
+
+                <p>
+                    Abhi school ki taraf se koi
+                    naya notice nahi hai.
+                </p>
+
+            </div>
+        `;
+
+        return;
+    }
+
+
+    notices.forEach(function(notice) {
+
+        let div =
+            document.createElement("div");
+
+        div.className = "notice";
+
+
+        let title =
+            document.createElement("h3");
+
+        title.innerText =
+            "📢 " + notice.title;
+
+
+        let date =
+            document.createElement("div");
+
+        date.className = "date";
+
+        date.innerText =
+            "📅 " + notice.date;
+
+
+        let message =
+            document.createElement("p");
+
+        message.innerText =
+            notice.message;
+
+
+        div.appendChild(title);
+
+        div.appendChild(date);
+
+        div.appendChild(message);
+
+        list.appendChild(div);
+
+    });
+
+}
+
+
+/* ================= START ================= */
+
+loadNotices();
 
 </script>
 

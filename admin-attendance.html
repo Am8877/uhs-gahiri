@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Attendance Management - UHS GAHIRI</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef5ff;
+}
+
+header {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.container {
+    width: 94%;
+    max-width: 700px;
+    margin: 25px auto;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    margin-bottom: 18px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #ccc;
+}
+
+h2 {
+    color: #0757a0;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 7px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+}
+
+button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 15px;
+    background: #0757a0;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.delete {
+    background: #d32f2f;
+}
+
+.attendance {
+    border-left: 5px solid #0757a0;
+    margin-bottom: 12px;
+}
+
+.present {
+    color: green;
+    font-weight: bold;
+}
+
+.absent {
+    color: #d32f2f;
+    font-weight: bold;
+}
+
+.empty {
+    text-align: center;
+    color: #777;
+}
+
+.back {
+    display: block;
+    width: 230px;
+    margin: 25px auto;
+    padding: 12px;
+    background: #333;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 7px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>UHS GAHIRI</h1>
+    <p>📅 Attendance Management</p>
+</header>
+
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>➕ Mark Attendance</h2>
+
+        <form id="attendanceForm">
+
+            <label>Student ID</label>
+
+            <input
+                type="text"
+                id="studentId"
+                placeholder="Example: UHS001"
+                required
+            >
+
+
+            <label>Date</label>
+
+            <input
+                type="date"
+                id="attendanceDate"
+                required
+            >
+
+
+            <label>Status</label>
+
+            <select id="status" required>
+
+                <option value="">
+                    Select Status
+                </option>
+
+                <option value="Present">
+                    ✅ Present
+                </option>
+
+                <option value="Absent">
+                    ❌ Absent
+                </option>
+
+            </select>
+
+
+            <button type="submit">
+                💾 Save Attendance
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>📋 Attendance Records</h2>
+
+        <div id="attendanceList"></div>
+
+    </div>
+
+</div>
+
+
+<a class="back" href="admin-dashboard.html">
+    ← Back to Principal Dashboard
+</a>
+
+
+<script>
+
+/* ================= ADMIN CHECK ================= */
+
+if (
+    localStorage.getItem("adminLoggedIn")
+    !== "true"
+) {
+
+    alert("Please Principal Login karein.");
+
+    window.location.href =
+        "admin-login.html";
+
+}
+
+
+/* ================= TODAY DATE ================= */
+
+let today =
+    new Date().toISOString().split("T")[0];
+
+document.getElementById(
+    "attendanceDate"
+).value = today;
+
+
+/* ================= LOAD RECORDS ================= */
+
+function loadAttendance() {
+
+    let records =
+        JSON.parse(
+            localStorage.getItem(
+                "schoolAttendance"
+            )
+        ) || [];
+
+
+    let list =
+        document.getElementById(
+            "attendanceList"
+        );
+
+
+    list.innerHTML = "";
+
+
+    if (records.length === 0) {
+
+        list.innerHTML = `
+            <div class="empty">
+                📅 अभी कोई attendance record नहीं है।
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    records.forEach(function(item, index) {
+
+        let div =
+            document.createElement("div");
+
+        div.className =
+            "card attendance";
+
+
+        let statusClass =
+            item.status === "Present"
+            ? "present"
+            : "absent";
+
+
+        div.innerHTML = `
+
+            <b>👨‍🎓 Student ID:</b>
+            ${item.studentId}
+
+            <br><br>
+
+            <b>📅 Date:</b>
+            ${item.date}
+
+            <br><br>
+
+            <b>Status:</b>
+
+            <span class="${statusClass}">
+                ${item.status === "Present"
+                    ? "✅ Present"
+                    : "❌ Absent"}
+            </span>
+
+
+            <button
+                class="delete"
+                onclick="deleteAttendance(${index})">
+
+                🗑️ Delete
+
+            </button>
+
+        `;
+
+
+        list.appendChild(div);
+
+    });
+
+}
+
+
+/* ================= SAVE ATTENDANCE ================= */
+
+document.getElementById(
+    "attendanceForm"
+).addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+
+        let studentId =
+            document.getElementById(
+                "studentId"
+            ).value.trim();
+
+
+        let date =
+            document.getElementById(
+                "attendanceDate"
+            ).value;
+
+
+        let status =
+            document.getElementById(
+                "status"
+            ).value;
+
+
+        let records =
+            JSON.parse(
+                localStorage.getItem(
+                    "schoolAttendance"
+                )
+            ) || [];
+
+
+        /* SAME STUDENT + SAME DATE CHECK */
+
+        let existing =
+            records.find(function(item) {
+
+                return (
+                    item.studentId === studentId &&
+                    item.date === date
+                );
+
+            });
+
+
+        if (existing) {
+
+            alert(
+                "❌ Is Student ki is date ki attendance already hai."
+            );
+
+            return;
+
+        }
+
+
+        records.push({
+
+            studentId: studentId,
+
+            date: date,
+
+            status: status
+
+        });
+
+
+        localStorage.setItem(
+            "schoolAttendance",
+            JSON.stringify(records)
+        );
+
+
+        document.getElementById(
+            "attendanceForm"
+        ).reset();
+
+
+        document.getElementById(
+            "attendanceDate"
+        ).value = today;
+
+
+        loadAttendance();
+
+
+        alert(
+            "Attendance Saved Successfully! ✅"
+        );
+
+    }
+);
+
+
+/* ================= DELETE ================= */
+
+function deleteAttendance(index) {
+
+    if (
+        !confirm(
+            "Kya ye attendance delete karni hai?"
+        )
+    ) {
+        return;
+    }
+
+
+    let records =
+        JSON.parse(
+            localStorage.getItem(
+                "schoolAttendance"
+            )
+        ) || [];
+
+
+    records.splice(index, 1);
+
+
+    localStorage.setItem(
+        "schoolAttendance",
+        JSON.stringify(records)
+    );
+
+
+    loadAttendance();
+
+}
+
+
+/* ================= START ================= */
+
+loadAttendance();
+
+</script>
+
+</body>
+</html>

@@ -7,76 +7,104 @@
 <title>Student Login - UHS GAHIRI</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #eef5ff;
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#eef5ff;
 }
 
-.login-box {
-    width: 90%;
-    max-width: 380px;
-    background: white;
-    margin: 80px auto;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px #bbb;
-    box-sizing: border-box;
+.login-box{
+    width:90%;
+    max-width:400px;
+    background:white;
+    margin:40px auto;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 4px 15px #bbb;
+    box-sizing:border-box;
 }
 
-h1 {
-    text-align: center;
-    color: #0757a0;
+h1,h2{
+    text-align:center;
+    color:#0757a0;
 }
 
-p {
-    text-align: center;
-    color: #555;
+p{
+    text-align:center;
+    color:#555;
 }
 
-label {
-    display: block;
-    margin-top: 18px;
-    font-weight: bold;
+label{
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
 }
 
-input {
-    width: 100%;
-    padding: 13px;
-    margin-top: 7px;
-    border: 1px solid #ccc;
-    border-radius: 7px;
-    box-sizing: border-box;
+input,
+select{
+    width:100%;
+    padding:13px;
+    margin-top:7px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    box-sizing:border-box;
+    font-size:16px;
+    background:white;
 }
 
-button {
-    width: 100%;
-    padding: 14px;
-    margin-top: 25px;
-    background: #0757a0;
-    color: white;
-    border: none;
-    border-radius: 7px;
-    font-size: 16px;
-    font-weight: bold;
+button{
+    width:100%;
+    padding:14px;
+    margin-top:20px;
+    background:#0757a0;
+    color:white;
+    border:none;
+    border-radius:7px;
+    font-size:16px;
+    font-weight:bold;
 }
 
-.back {
-    display: block;
-    text-align: center;
-    margin-top: 20px;
-    color: #0757a0;
-    text-decoration: none;
+.switch{
+    text-align:center;
+    margin-top:18px;
+    color:#0757a0;
+    font-weight:bold;
+    cursor:pointer;
 }
 
-.error {
-    display: none;
-    margin-top: 15px;
-    padding: 10px;
-    background: #f8d7da;
-    color: #721c24;
-    border-radius: 6px;
-    text-align: center;
+.back{
+    display:block;
+    text-align:center;
+    margin-top:20px;
+    color:#0757a0;
+    text-decoration:none;
+}
+
+.message{
+    display:none;
+    margin-top:15px;
+    padding:10px;
+    border-radius:6px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.success{
+    background:#d4edda;
+    color:#155724;
+}
+
+.error{
+    background:#f8d7da;
+    color:#721c24;
+}
+
+#registerBox{
+    display:none;
+}
+
+#streamBox{
+    display:none;
 }
 </style>
 </head>
@@ -87,7 +115,14 @@ button {
 
 <h1>UHS GAHIRI</h1>
 
-<p>🎓 Student Login</p>
+
+<!-- ================= LOGIN ================= -->
+
+<div id="loginBox">
+
+<h2>🎓 Student Login</h2>
+
+<p>Login to your student account</p>
 
 <form id="loginForm">
 
@@ -95,7 +130,7 @@ button {
 
 <input
 type="text"
-id="studentId"
+id="loginStudentId"
 placeholder="Enter Student ID"
 required
 >
@@ -104,7 +139,7 @@ required
 
 <input
 type="password"
-id="password"
+id="loginPassword"
 placeholder="Enter Password"
 required
 >
@@ -115,9 +150,194 @@ required
 
 </form>
 
-<div class="error" id="error">
-❌ Student ID या Password गलत है!
+
+<div class="switch"
+onclick="showRegister()">
+
+📝 New Student? Register Here
+
 </div>
+
+
+<div class="switch"
+onclick="window.location.href='forgot-password.html'">
+
+🔑 Forgot Password?
+
+</div>
+
+
+<div class="message error"
+id="loginError">
+
+❌ Student ID या Password गलत है!
+
+</div>
+
+</div>
+
+
+<!-- ================= REGISTER ================= -->
+
+<div id="registerBox">
+
+<h2>📝 Student Registration</h2>
+
+<p>Create your student account</p>
+
+<form id="registerForm">
+
+
+<label>Student Name</label>
+
+<input
+type="text"
+id="studentName"
+placeholder="Enter Full Name"
+required
+>
+
+
+<label>Student ID</label>
+
+<input
+type="text"
+id="registerStudentId"
+placeholder="Create Student ID"
+required
+>
+
+
+<label>Mobile Number</label>
+
+<input
+type="tel"
+id="studentMobile"
+placeholder="10 digit mobile number"
+maxlength="10"
+inputmode="numeric"
+required
+>
+
+
+<label>Class</label>
+
+<select
+id="studentClass"
+required
+>
+
+<option value="">
+-- Class Select करें --
+</option>
+
+<option value="9">
+9th
+</option>
+
+<option value="10">
+10th
+</option>
+
+<option value="11">
+11th
+</option>
+
+<option value="12">
+12th
+</option>
+
+</select>
+
+
+<!-- STREAM -->
+
+<div id="streamBox">
+
+<label>Stream</label>
+
+<select id="studentStream">
+
+<option value="">
+-- Stream Select करें --
+</option>
+
+<option value="science">
+🔬 Science
+</option>
+
+<option value="arts">
+📚 Arts
+</option>
+
+<option value="commerce">
+💼 Commerce
+</option>
+
+</select>
+
+</div>
+
+
+<label>Email</label>
+
+<input
+type="email"
+id="studentEmail"
+placeholder="Enter Email"
+required
+>
+
+
+<label>Password</label>
+
+<input
+type="password"
+id="registerPassword"
+placeholder="Create Password"
+required
+>
+
+
+<label>Confirm Password</label>
+
+<input
+type="password"
+id="confirmPassword"
+placeholder="Confirm Password"
+required
+>
+
+
+<button type="submit">
+✅ Register
+</button>
+
+</form>
+
+
+<div class="switch"
+onclick="showLogin()">
+
+🔐 Already have an account? Login
+
+</div>
+
+
+<div class="message error"
+id="registerError">
+</div>
+
+
+<div class="message success"
+id="registerSuccess">
+
+✅ Registration Successful!
+
+</div>
+
+</div>
+
 
 <a class="back" href="index.html">
 ← Back to Home
@@ -125,36 +345,447 @@ required
 
 </div>
 
+
 <script>
 
-document.getElementById("loginForm").addEventListener(
-"submit",
-function(event) {
+/* ================= SHOW LOGIN ================= */
 
-event.preventDefault();
+function showLogin(){
 
-let id =
-document.getElementById("studentId").value.trim();
+    document.getElementById(
+        "loginBox"
+    ).style.display="block";
 
-let password =
-document.getElementById("password").value;
-
-if (id === "student" && password === "1234") {
-
-localStorage.setItem("studentLoggedIn", "true");
-
-localStorage.setItem("studentID", id);
-
-alert("Login Successful! ✅");
-
-window.location.href = "dashboard.html";
-
-} else {
-
-document.getElementById("error").style.display =
-"block";
+    document.getElementById(
+        "registerBox"
+    ).style.display="none";
 
 }
+
+
+/* ================= SHOW REGISTER ================= */
+
+function showRegister(){
+
+    document.getElementById(
+        "loginBox"
+    ).style.display="none";
+
+    document.getElementById(
+        "registerBox"
+    ).style.display="block";
+
+}
+
+
+/* ================= CLASS CHANGE ================= */
+
+document.getElementById(
+    "studentClass"
+).addEventListener(
+"change",
+function(){
+
+    let cls=this.value;
+
+    let streamBox =
+        document.getElementById(
+            "streamBox"
+        );
+
+    let stream =
+        document.getElementById(
+            "studentStream"
+        );
+
+
+    if(
+        cls==="11" ||
+        cls==="12"
+    ){
+
+        streamBox.style.display="block";
+
+        stream.required=true;
+
+    }else{
+
+        streamBox.style.display="none";
+
+        stream.required=false;
+
+        stream.value="";
+
+    }
+
+});
+
+
+/* ================= REGISTRATION ================= */
+
+document.getElementById(
+    "registerForm"
+).addEventListener(
+"submit",
+function(event){
+
+    event.preventDefault();
+
+
+    let name =
+        document.getElementById(
+            "studentName"
+        ).value.trim();
+
+
+    let studentId =
+        document.getElementById(
+            "registerStudentId"
+        ).value.trim();
+
+
+    let mobile =
+        document.getElementById(
+            "studentMobile"
+        ).value.trim();
+
+
+    let studentClass =
+        document.getElementById(
+            "studentClass"
+        ).value;
+
+
+    let studentStream =
+        document.getElementById(
+            "studentStream"
+        ).value;
+
+
+    let email =
+        document.getElementById(
+            "studentEmail"
+        ).value.trim();
+
+
+    let password =
+        document.getElementById(
+            "registerPassword"
+        ).value;
+
+
+    let confirmPassword =
+        document.getElementById(
+            "confirmPassword"
+        ).value;
+
+
+    let error =
+        document.getElementById(
+            "registerError"
+        );
+
+
+    let success =
+        document.getElementById(
+            "registerSuccess"
+        );
+
+
+    error.style.display="none";
+
+    success.style.display="none";
+
+
+    /* MOBILE CHECK */
+
+    if(!/^[0-9]{10}$/.test(mobile)){
+
+        error.innerHTML=
+            "❌ सही 10 digit Mobile Number डालें।";
+
+        error.style.display="block";
+
+        return;
+
+    }
+
+
+    /* CLASS CHECK */
+
+    if(!studentClass){
+
+        error.innerHTML=
+            "❌ Class select करें।";
+
+        error.style.display="block";
+
+        return;
+
+    }
+
+
+    /* STREAM CHECK */
+
+    if(
+        (studentClass==="11" ||
+         studentClass==="12")
+        &&
+        !studentStream
+    ){
+
+        error.innerHTML=
+            "❌ 11th/12th में Stream select करें।";
+
+        error.style.display="block";
+
+        return;
+
+    }
+
+
+    /* PASSWORD CHECK */
+
+    if(password.length < 6){
+
+        error.innerHTML=
+            "❌ Password कम से कम 6 characters का होना चाहिए।";
+
+        error.style.display="block";
+
+        return;
+
+    }
+
+
+    if(password !== confirmPassword){
+
+        error.innerHTML=
+            "❌ Password match नहीं कर रहा।";
+
+        error.style.display="block";
+
+        return;
+
+    }
+
+
+    /* GET STUDENTS */
+
+    let students =
+        JSON.parse(
+            localStorage.getItem(
+                "students"
+            )
+        ) || [];
+
+
+    /* STUDENT ID CHECK */
+
+    let idExists =
+        students.find(function(student){
+
+            return(
+                student.studentId ===
+                studentId
+            );
+
+        });
+
+
+    if(idExists){
+
+        error.innerHTML=
+            "❌ यह Student ID पहले से registered है।";
+
+        error.style.display="block";
+
+        return;
+
+    }
+
+
+    /* MOBILE CHECK */
+
+    let mobileExists =
+        students.find(function(student){
+
+            return(
+                student.mobile ===
+                mobile
+            );
+
+        });
+
+
+    if(mobileExists){
+
+        error.innerHTML=
+            "❌ यह Mobile Number पहले से registered है।";
+
+        error.style.display="block";
+
+        return;
+
+    }
+
+
+    /* CREATE STUDENT */
+
+    let newStudent={
+
+        name:name,
+
+        studentId:studentId,
+
+        mobile:mobile,
+
+        email:email,
+
+        password:password,
+
+        studentClass:studentClass,
+
+        studentStream:
+            studentStream || ""
+
+    };
+
+
+    students.push(newStudent);
+
+
+    /* SAVE */
+
+    localStorage.setItem(
+        "students",
+        JSON.stringify(students)
+    );
+
+
+    /* SUCCESS */
+
+    success.innerHTML=
+        "✅ Registration Successful!";
+
+    success.style.display="block";
+
+
+    document.getElementById(
+        "registerForm"
+    ).reset();
+
+
+    document.getElementById(
+        "streamBox"
+    ).style.display="none";
+
+
+    setTimeout(function(){
+
+        showLogin();
+
+    },1500);
+
+});
+
+
+/* ================= LOGIN ================= */
+
+document.getElementById(
+    "loginForm"
+).addEventListener(
+"submit",
+function(event){
+
+    event.preventDefault();
+
+
+    let id =
+        document.getElementById(
+            "loginStudentId"
+        ).value.trim();
+
+
+    let password =
+        document.getElementById(
+            "loginPassword"
+        ).value;
+
+
+    let students =
+        JSON.parse(
+            localStorage.getItem(
+                "students"
+            )
+        ) || [];
+
+
+    let student =
+        students.find(function(student){
+
+            return(
+                student.studentId === id &&
+                student.password === password
+            );
+
+        });
+
+
+    if(student){
+
+        localStorage.setItem(
+            "studentLoggedIn",
+            "true"
+        );
+
+        localStorage.setItem(
+            "studentID",
+            student.studentId
+        );
+
+        localStorage.setItem(
+            "studentName",
+            student.name
+        );
+
+        localStorage.setItem(
+            "studentMobile",
+            student.mobile
+        );
+
+        localStorage.setItem(
+            "studentEmail",
+            student.email
+        );
+
+        localStorage.setItem(
+            "studentClass",
+            student.studentClass
+        );
+
+        localStorage.setItem(
+            "studentStream",
+            student.studentStream || ""
+        );
+
+
+        alert(
+            "Login Successful! ✅"
+        );
+
+
+        window.location.href=
+            "dashboard.html";
+
+
+    }else{
+
+        document.getElementById(
+            "loginError"
+        ).style.display="block";
+
+    }
 
 });
 

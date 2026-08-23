@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Teacher Attendance - UHS GAHIRI</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef5ff;
+}
+
+header {
+    background: #0757a0;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header p {
+    margin: 8px 0 0;
+}
+
+.container {
+    width: 94%;
+    max-width: 700px;
+    margin: 25px auto;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    margin-bottom: 18px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #ccc;
+}
+
+h2 {
+    color: #0757a0;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 13px;
+    margin-top: 7px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    background: white;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 20px;
+    background: #0757a0;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.delete {
+    background: #d32f2f;
+}
+
+.record {
+    border-left: 5px solid #0757a0;
+}
+
+.empty {
+    text-align: center;
+    color: #777;
+}
+
+.success {
+    display: none;
+    margin-top: 15px;
+    padding: 10px;
+    background: #d4edda;
+    color: #155724;
+    border-radius: 7px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.back {
+    display: block;
+    width: 230px;
+    margin: 25px auto;
+    padding: 12px;
+    background: #333;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 7px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>UHS GAHIRI</h1>
+    <p>📅 Student Attendance</p>
+</header>
+
+
+<div class="container">
+
+<div class="card">
+
+<h2>➕ Mark Attendance</h2>
+
+<form id="attendanceForm">
+
+<label>Student ID</label>
+
+<input
+type="text"
+id="studentId"
+placeholder="Example: UHS001"
+required
+>
+
+<label>Date</label>
+
+<input
+type="date"
+id="attendanceDate"
+required
+>
+
+<label>Attendance</label>
+
+<select id="status" required>
+
+<option value="">
+-- Attendance Select करें --
+</option>
+
+<option value="Present">
+✅ Present
+</option>
+
+<option value="Absent">
+❌ Absent
+</option>
+
+</select>
+
+<button type="submit">
+💾 Save Attendance
+</button>
+
+</form>
+
+<div class="success" id="successMessage">
+✅ Attendance Successfully Saved!
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>📋 Attendance Records</h2>
+
+<div id="attendanceList"></div>
+
+</div>
+
+</div>
+
+
+<a class="back" href="teacher-dashboard.html">
+← Back to Teacher Dashboard
+</a>
+
+
+<script>
+
+/* ================= TEACHER LOGIN CHECK ================= */
+
+if (
+    localStorage.getItem("teacherLoggedIn")
+    !== "true"
+) {
+
+    alert("Please Teacher Login karein.");
+
+    window.location.href =
+        "teacher-login.html";
+}
+
+
+/* ================= TODAY DATE ================= */
+
+let today =
+    new Date().toISOString().split("T")[0];
+
+document.getElementById(
+    "attendanceDate"
+).value = today;
+
+
+/* ================= LOAD
