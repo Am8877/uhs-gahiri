@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Complaints - UHS GAHIRI</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef5ff;
+}
+
+header {
+    background: #0757a0;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.container {
+    padding: 20px;
+}
+
+.complaint {
+    background: white;
+    padding: 18px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #ccc;
+}
+
+.complaint h3 {
+    color: #0757a0;
+}
+
+.status {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: #fff3cd;
+    color: #856404;
+    font-weight: bold;
+}
+
+.solved {
+    background: #d4edda;
+    color: green;
+}
+
+textarea {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 10px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    height: 90px;
+    font-size: 15px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    background: #0757a0;
+    color: white;
+    font-weight: bold;
+}
+
+.solve {
+    background: green;
+}
+
+.delete {
+    background: red;
+}
+
+.reply {
+    background: #f1f7ff;
+    padding: 12px;
+    margin-top: 12px;
+    border-radius: 8px;
+}
+
+.empty {
+    background: white;
+    padding: 25px;
+    text-align: center;
+    border-radius: 12px;
+}
+
+.back {
+    display: block;
+    width: 180px;
+    margin: 25px auto;
+    padding: 12px;
+    text-align: center;
+    background: #0757a0;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>UHS GAHIRI</h1>
+    <p>Principal Complaint Panel</p>
+</header>
+
+<div class="container">
+    <div id="complaints"></div>
+</div>
+
+<a class="back" href="admin.html">
+    ← Admin Dashboard
+</a>
+
+<script>
+
+function loadComplaints() {
+
+    let complaints =
+        JSON.parse(localStorage.getItem("uhsComplaints")) || [];
+
+    let box = document.getElementById("complaints");
+
+    box.innerHTML = "";
+
+    if (complaints.length === 0) {
+
+        box.innerHTML = `
+            <div class="empty">
+                📭 अभी कोई complaint नहीं है।
+            </div>
+        `;
+
+        return;
+    }
+
+    complaints.forEach(function(c, index) {
+
+        let div = document.createElement("div");
+
+        div.className = "complaint";
+
+        div.innerHTML = `
+            <h3>📝 Complaint #${index + 1}</h3>
+
+            <p><b>Student:</b> ${c.name}</p>
+
+            <p><b>Student ID:</b> ${c.studentId}</p>
+
+            <p><b>Type:</b> ${c.type}</p>
+
+            <p><b>Date:</b> ${c.date}</p>
+
+            <p>
+                <b>Complaint:</b><br>
+                ${c.complaint}
+            </p>
+
+            <span class="status ${
+                c.status === "Solved" ? "solved" : ""
+            }">
+                ${c.status}
+            </span>
+
+            <br>
+
+            ${
+                c.reply
+                ?
+                `<div class="reply">
+                    <b>💬 Principal Reply:</b><br>
+                    ${c.reply}
+                </div>`
+                :
+                `
+                <textarea
+                    id="reply${index}"
+                    placeholder="Student को reply लिखें..."
+                ></textarea>
+
+                <button onclick="sendReply(${index})">
+                    💬 Send Reply
+                </button>
+                `
+            }
+
+            <br>
+
+            ${
+                c.status !== "Solved"
+                ?
+                `<button class="solve"
+                    onclick="solveComplaint(${index})">
+                    ✅ Mark as Solved
+                </button>`
+                :
+                ""
+            }
+
+            <button class="delete"
+                onclick="deleteComplaint(${index})">
+                🗑️ Delete
+            </button>
+        `;
+
+        box.appendChild(div);
+    });
+}
+
+
+function sendReply(index) {
+
+    let complaints =
+        JSON.parse(localStorage.getItem("uhsComplaints")) || [];
+
+    let reply =
+        document.getElementById("reply" + index).value.trim();
+
+    if (reply === "") {
+        alert("पहले reply लिखें।");
+        return;
+    }
+
+    complaints[index].reply = reply;
+
+    localStorage.setItem(
+        "uhsComplaints",
+        JSON.stringify(complaints)
+    );
+
+    alert("Reply Successfully Sent! ✅");
+
+    loadComplaints();
+}
+
+
+function solveComplaint(index) {
+
+    let complaints =
+        JSON.parse(localStorage.getItem("uhsComplaints")) || [];
+
+    complaints[index].status = "Solved";
+
+    localStorage.setItem(
+        "uhsComplaints",
+        JSON.stringify(complaints)
+    );
+
+    loadComplaints();
+}
+
+
+function deleteComplaint(index) {
+
+    let complaints =
+        JSON.parse(localStorage.getItem("uhsComplaints")) || [];
+
+    complaints.splice(index, 1);
+
+    localStorage.setItem(
+        "uhsComplaints",
+        JSON.stringify(complaints)
+    );
+
+    loadComplaints();
+}
+
+
+loadComplaints();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>UHS GAHIRI - Principal Panel</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef5ff;
+}
+
+header {
+    background: #0757a0;
+    color: white;
+    text-align: center;
+    padding: 22px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+.welcome {
+    background: white;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #ccc;
+}
+
+.welcome h2 {
+    color: #0757a0;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 20px;
+}
+
+.box {
+    background: white;
+    padding: 20px 10px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #ccc;
+}
+
+.box h2 {
+    font-size: 35px;
+    margin: 5px;
+}
+
+.box h3 {
+    color: #0757a0;
+}
+
+.open {
+    display: inline-block;
+    background: #0757a0;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.logout {
+    display: block;
+    width: 150px;
+    margin: 20px auto 30px;
+    padding: 12px;
+    text-align: center;
+    background: #d62828;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>UHS GAHIRI</h1>
+    <p>Principal / Admin Panel</p>
+</header>
+
+<div class="welcome">
+    <h2>Welcome Principal 👨‍🏫</h2>
+    <p>School Management Dashboard</p>
+</div>
+
+<div class="menu">
+
+    <div class="box">
+        <h2>👨‍🎓</h2>
+        <h3>Students</h3>
+        <p>Students manage karein</p>
+        <a class="open" href="students.html">Open</a>
+    </div>
+
+    <div class="box">
+        <h2>📅</h2>
+        <h3>Attendance</h3>
+        <p>Attendance dekhein</p>
+        <a class="open" href="attendance.html">Open</a>
+    </div>
+
+    <div class="box">
+        <h2>📚</h2>
+        <h3>Homework</h3>
+        <p>Homework add karein</p>
+        <a class="open" href="admin-homework.html">Open</a>
+    </div>
+
+    <div class="box">
+        <h2>📖</h2>
+        <h3>Syllabus</h3>
+        <p>Syllabus dekhein</p>
+        <a class="open" href="syllabus.html">Open</a>
+    </div>
+
+    <div class="box">
+        <h2>📝</h2>
+        <h3>Complaints</h3>
+        <p>Student complaints dekhein</p>
+        <a class="open" href="admin-complaints.html">Open</a>
+    </div>
+
+    <div class="box">
+        <h2>📢</h2>
+        <h3>Notice</h3>
+        <p>School notice dekhein</p>
+        <a class="open" href="notice.html">Open</a>
+    </div>
+
+</div>
+
+<a class="logout" href="index.html">Logout</a>
+
+</body>
+</html>

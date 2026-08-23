@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Syllabus - UHS GAHIRI</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef5ff;
+        }
+
+        header {
+            background: #0757a0;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .subject {
+            background: white;
+            margin-bottom: 15px;
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #ccc;
+        }
+
+        .subject h2 {
+            color: #0757a0;
+            margin-top: 0;
+        }
+
+        .subject ul {
+            padding-left: 20px;
+            line-height: 1.8;
+        }
+
+        .status {
+            background: #e8f5e9;
+            color: green;
+            padding: 8px;
+            border-radius: 6px;
+            display: inline-block;
+            font-size: 14px;
+        }
+
+        .back {
+            display: block;
+            width: 180px;
+            margin: 25px auto;
+            padding: 12px;
+            text-align: center;
+            background: #0757a0;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>UHS GAHIRI</h1>
+    <p>Student Syllabus</p>
+</header>
+
+<div class="container">
+
+    <div class="subject">
+        <h2>📘 Physics</h2>
+        <ul>
+            <li>Electric Charges and Fields</li>
+            <li>Electrostatic Potential</li>
+            <li>Current Electricity</li>
+            <li>Moving Charges and Magnetism</li>
+        </ul>
+        <span class="status">Syllabus Available</span>
+    </div>
+
+    <div class="subject">
+        <h2>🧪 Chemistry</h2>
+        <ul>
+            <li>Solutions</li>
+            <li>Electrochemistry</li>
+            <li>Chemical Kinetics</li>
+            <li>Haloalkanes and Haloarenes</li>
+        </ul>
+        <span class="status">Syllabus Available</span>
+    </div>
+
+    <div class="subject">
+        <h2>🧬 Biology</h2>
+        <ul>
+            <li>Sexual Reproduction</li>
+            <li>Human Reproduction</li>
+            <li>Genetics and Evolution</li>
+            <li>Biology and Human Welfare</li>
+        </ul>
+        <span class="status">Syllabus Available</span>
+    </div>
+
+    <div class="subject">
+        <h2>📕 Hindi</h2>
+        <ul>
+            <li>गद्य खंड</li>
+            <li>काव्य खंड</li>
+            <li>लेखन कौशल</li>
+        </ul>
+        <span class="status">Syllabus Available</span>
+    </div>
+
+    <div class="subject">
+        <

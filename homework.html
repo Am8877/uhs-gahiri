@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Homework - UHS GAHIRI</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef5ff;
+}
+
+header {
+    background: #0757a0;
+    color: white;
+    text-align: center;
+    padding: 22px;
+}
+
+.container {
+    padding: 20px;
+}
+
+.homework {
+    background: white;
+    padding: 18px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #ccc;
+}
+
+.homework h2 {
+    color: #0757a0;
+    margin-top: 0;
+}
+
+.date {
+    color: #777;
+    font-size: 14px;
+}
+
+.status {
+    display: inline-block;
+    background: #fff3cd;
+    color: #856404;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.completed {
+    background: #d4edda;
+    color: green;
+}
+
+button {
+    margin-top: 12px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    background: #0757a0;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.back {
+    display: block;
+    width: 180px;
+    margin: 25px auto;
+    padding: 12px;
+    text-align: center;
+    background: #0757a0;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>UHS GAHIRI</h1>
+    <p>Student Homework</p>
+</header>
+
+<div class="container">
+
+    <div class="homework">
+        <h2>📘 Physics</h2>
+        <p class="date">Date: 23 August 2026</p>
+        <p>Chapter 1 ke questions 1 se 10 tak solve karein.</p>
+
+        <div class="status" id="status1">⏳ Pending</div>
+
+        <br>
+
+        <button type="button" onclick="completeHomework('status1', this)">
+            ✅ Mark as Completed
+        </button>
+    </div>
+
+
+    <div class="homework">
+        <h2>🧪 Chemistry</h2>
+        <p class="date">Date: 23 August 2026</p>
+        <p>Chapter 2 ke important questions likhein.</p>
+
+        <div class="status" id="status2">⏳ Pending</div>
+
+        <br>
+
+        <button type="button" onclick="completeHomework('status2', this)">
+            ✅ Mark as Completed
+        </button>
+    </div>
+
+
+    <div class="homework">
+        <h2>🧬 Biology</h2>
+        <p class="date">Date: 23 August 2026</p>
+        <p>Cell chapter ka diagram banayein aur label karein.</p>
+
+        <div class="status" id="status3">⏳ Pending</div>
+
+        <br>
+
+        <button type="button" onclick="completeHomework('status3', this)">
+            ✅ Mark as Completed
+        </button>
+    </div>
+
+
+    <div class="homework">
+        <h2>💻 Computer</h2>
+        <p class="date">Date: 23 August 2026</p>
+        <p>Binary number system ke 10 questions practice karein.</p>
+
+        <div class="status" id="status4">⏳ Pending</div>
+
+        <br>
+
+        <button type="button" onclick="completeHomework('status4', this)">
+            ✅ Mark as Completed
+        </button>
+    </div>
+
+</div>
+
+<a class="back" href="dashboard.html">
+    ← Dashboard
+</a>
+
+
+<script>
+
+function completeHomework(statusId, button) {
+
+    var status = document.getElementById(statusId);
+
+    status.innerHTML = "✅ Completed";
+
+    status.classList.add("completed");
+
+    button.innerHTML = "✔ Completed";
+
+    button.disabled = true;
+
+}
+
+</script>
+
+</body>
+</html>

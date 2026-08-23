@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Attendance - UHS GAHIRI</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef5ff;
+}
+
+header {
+    background: #0757a0;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.attendance {
+    width: 90%;
+    max-width: 600px;
+    margin: 25px auto;
+    background: white;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #ccc;
+}
+
+h2 {
+    text-align: center;
+    color: #0757a0;
+}
+
+.box {
+    margin: 15px 0;
+    padding: 18px;
+    background: #f5f9ff;
+    border-radius: 10px;
+    border-left: 5px solid #0757a0;
+}
+
+.box b {
+    color: #0757a0;
+}
+
+.percent {
+    text-align: center;
+    margin-top: 20px;
+    padding: 20px;
+    background: #0757a0;
+    color: white;
+    border-radius: 10px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.back {
+    display: block;
+    width: 180px;
+    margin: 25px auto;
+    padding: 12px;
+    background: #0757a0;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>UHS GAHIRI</h1>
+    <p>📅 Student Attendance</p>
+</header>
+
+<div class="attendance">
+
+    <h2>My Attendance</h2>
+
+    <div class="box">
+        <b>Student ID:</b>
+        <span id="studentID">---</span>
+    </div>
+
+    <div class="box">
+        <b>Total Classes:</b>
+        <span>--</span>
+    </div>
+
+    <div class="box">
+        <b>Present:</b>
+        <span>--</span>
+    </div>
+
+    <div class="box">
+        <b>Absent:</b>
+        <span>--</span>
+    </div>
+
+    <div class="percent">
+        Attendance: --%
+    </div>
+
+</div>
+
+<button class="back" onclick="goDashboard()">
+    ← Dashboard
+</button>
+
+<script>
+
+let loggedIn =
+localStorage.getItem("studentLoggedIn");
+
+if (loggedIn !== "true") {
+
+    alert("Please Student Login karein.");
+
+    window.location.href = "login.html";
+}
+
+let studentID =
+localStorage.getItem("studentID");
+
+if (studentID) {
+    document.getElementById("studentID").innerText =
+    studentID;
+}
+
+function goDashboard() {
+    window.location.href = "dashboard.html";
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>School Notice - UHS GAHIRI</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef5ff;
+        }
+
+        header {
+            background: #0757a0;
+            color: white;
+            text-align: center;
+            padding: 22px;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .notice {
+            background: white;
+            padding: 18px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #ccc;
+        }
+
+        .notice h2 {
+            color: #0757a0;
+            margin-top: 0;
+        }
+
+        .date {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .back {
+            display: block;
+            width: 180px;
+            margin: 25px auto;
+            padding: 12px;
+            text-align: center;
+            background: #0757a0;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>UHS GAHIRI</h1>
+    <p>📢 School Notice</p>
+</header>
+
+<div class="container">
+
+    <div class="notice">
+        <h2>📢 School Notice</h2>
+
+        <p class="date">
+            23 August 2026
+        </p>
+
+        <p>
+            सभी विद्यार्थियों को सूचित किया जाता है कि
+            नियमित रूप से विद्यालय की कक्षा में उपस्थित रहें।
+        </p>
+    </div>
+
+
+    <div class="notice">
+        <h2>📢 Important Notice</h2>
+
+        <p class="date">
+            23 August 2026
+        </p>
+
+        <p>
+            विद्यार्थी अपना homework समय पर पूरा करें।
+        </p>
+    </div>
+
+
+    <div class="notice">
+        <h2>📢 परीक्षा सूचना</h2>
+
+        <p class="date">
+            23 August 2026
+        </p>
+
+        <p>
+            सभी विद्यार्थी परीक्षा की तैयारी समय पर करें
+            और विद्यालय द्वारा दिए गए निर्देशों का पालन करें।
+        </p>
+    </div>
+
+</div>
+
+
+<button class="back" onclick="goDashboard()">
+    ← Dashboard
+</button>
+
+
+<script>
+
+function goDashboard() {
+
+    window.location.href = "dashboard.html";
+
+}
+
+</script>
+
+</body>
+</html>

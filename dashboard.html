@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Student Dashboard - UHS GAHIRI</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef5ff;
+}
+
+header {
+    background: #0757a0;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header p {
+    margin: 8px 0 0;
+}
+
+.welcome {
+    background: white;
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #ccc;
+}
+
+.welcome h2 {
+    color: #0757a0;
+    margin-top: 0;
+}
+
+.menu {
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.card {
+    background: white;
+    padding: 25px 10px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #ccc;
+    cursor: pointer;
+    font-weight: bold;
+    color: #0757a0;
+    transition: 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+.icon {
+    font-size: 35px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.logout {
+    display: block;
+    width: 180px;
+    margin: 25px auto;
+    padding: 12px;
+    background: #d32f2f;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@media (max-width: 450px) {
+    .menu {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>UHS GAHIRI</h1>
+    <p>🎓 Student Dashboard</p>
+</header>
+
+<div class="welcome">
+
+    <h2>Welcome, <span id="studentName">Student</span> 👋</h2>
+
+    <p>
+        Student ID:
+        <b id="studentID">---</b>
+    </p>
+
+    <p>
+        Class: <b>12th</b> |
+        Stream: <b>Science</b>
+    </p>
+
+</div>
+
+<div class="menu">
+
+    <div class="card" onclick="openPage('profile.html')">
+        <span class="icon">👤</span>
+        My Profile
+    </div>
+
+    <div class="card" onclick="openPage('subjects.html')">
+        <span class="icon">📚</span>
+        My Subjects
+    </div>
+
+    <div class="card" onclick="openPage('result.html')">
+        <span class="icon">📝</span>
+        Exam Result
+    </div>
+
+    <div class="card" onclick="openPage('attendence.html')">
+        <span class="icon">📅</span>
+        Attendance
+    </div>
+
+    <div class="card" onclick="openPage('notice.html')">
+        <span class="icon">📢</span>
+        Notice
+    </div>
+
+    <div class="card" onclick="openPage('contact.html')">
+        <span class="icon">📞</span>
+        Contact School
+    </div>
+
+</div>
+
+<button class="logout" onclick="logout()">
+    🚪 Logout
+</button>
+
+<script>
+
+let loggedIn =
+localStorage.getItem("studentLoggedIn");
+
+if (loggedIn !== "true") {
+
+    alert("Please Student Login karein.");
+
+    window.location.href = "login.html";
+}
+
+let studentID =
+localStorage.getItem("studentID");
+
+if (studentID) {
+
+    document.getElementById("studentID").innerText =
+    studentID;
+}
+
+function openPage(page) {
+
+    window.location.href = page;
+
+}
+
+function logout() {
+
+    localStorage.removeItem("studentLoggedIn");
+    localStorage.removeItem("studentID");
+
+    window.location.href = "login.html";
+
+}
+
+</script>
+
+</body>
+</html>

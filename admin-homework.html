@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Homework - UHS GAHIRI</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef5ff;
+        }
+
+        header {
+            background: #0757a0;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #ccc;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        select,
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 7px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        textarea {
+            height: 130px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 7px;
+            background: #0757a0;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .back {
+            display: block;
+            width: 180px;
+            margin: 25px auto;
+            padding: 12px;
+            text-align: center;
+            background: #0757a0;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>UHS GAHIRI</h1>
+    <p>Principal - Add Homework</p>
+</header>
+
+<div class="container">
+
+    <div class="box">
+
+        <h2>📚 Add New Homework</h2>
+
+        <form onsubmit="addHomework(event)">
+
+            <label>Class</label>
+
+            <select id="className" required>
+                <option value="">Class चुनें</option>
+                <option>Class 9</option>
+                <option>Class 10</option>
+                <option>Class 11</option>
+                <option>Class 12</option>
+            </select>
+
+            <label>Subject</label>
+
+            <select id="subject" required>
+                <option value="">Subject चुनें</option>
+                <option>Physics</option>
+                <option>Chemistry</option>
+                <option>Biology</option>
+                <option>Hindi</option>
+                <option>English</option>
+                <option>Computer</option>
+            </select>
+
+            <label>Date</label>
+
+            <input type="date" id="date" required>
+
+            <label>Homework</label>
+
+            <textarea
+                id="homework"
+                placeholder="Homework यहाँ लिखें..."
+                required>
+            </textarea>
+
+            <button type="submit">
+                ➕ Add Homework
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<a class="back" href="admin.html">← Admin Dashboard</a>
+
+<script>
+
+function addHomework(event) {
+
+    event.preventDefault();
+
+    let className = document.getElementById("className").value;
+    let subject = document.getElementById("subject").value;
+    let date = document.getElementById("date").value;
+    let homework = document.getElementById("homework").value;
+
+    alert(
+        "Homework Added Successfully! ✅\n\n" +
+        "Class: " + className +
+        "\nSubject: " + subject +
+        "\nDate: " + date
+    );
+
+}
+
+</script>
+
+</body>
+</html>

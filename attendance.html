@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Attendance - UHS GAHIRI</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef5ff;
+        }
+
+        header {
+            background: #0757a0;
+            color: white;
+            text-align: center;
+            padding: 22px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px 10px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #ccc;
+            text-align: center;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #555;
+        }
+
+        .number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #0757a0;
+        }
+
+        .present {
+            color: green;
+        }
+
+        .absent {
+            color: red;
+        }
+
+        .percentage-card {
+            background: white;
+            margin-top: 15px;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #ccc;
+            text-align: center;
+        }
+
+        .percentage {
+            font-size: 45px;
+            font-weight: bold;
+            color: #0757a0;
+        }
+
+        .bar {
+            width: 100%;
+            height: 18px;
+            background: #ddd;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .progress {
+            width: 85%;
+            height: 100%;
+            background: green;
+        }
+
+        .status {
+            margin-top: 15px;
+            padding: 10px;
+            background: #d4edda;
+            color: green;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        .back {
+            display: block;
+            width: 180px;
+            margin: 25px auto;
+            padding: 12px;
+            text-align: center;
+            background: #0757a0;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>UHS GAHIRI</h1>
+    <p>Student Attendance</p>
+</header>
+
+<div class="container">
+
+    <div class="summary">
+
+        <div class="card">
+            <h3>Total Days</h3>
+            <div class="number">100</div>
+        </div>
+
+        <div class="card">
+            <h3>Present</h3>
+            <div class="number present">85</div>
+        </div>
+
+        <div class="card">
+            <h3>Absent</h3>
+            <div class="number absent">15</div>
+        </div>
+
+        <div class="card">
+            <h3>Working Days</h3>
+            <div class="number">100</div>
+        </div>
+
+    </div>
+
+    <div class="percentage-card">
+
+        <h3>Attendance Percentage</h3>
+
+        <div class="percentage">85%</div>
+
+        <div class="bar">
+            <div class="progress"></div>
+        </div>
+
+        <div class="status">
+            ✅ Attendance is Good
+        </div>
+
+    </div>
+
+</div>
+
+<a class="back" href="dashboard.html">
+    ← Dashboard
+</a>
+
+</body>
+</html>

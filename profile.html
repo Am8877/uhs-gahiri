@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Student Profile - UHS GAHIRI</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef5ff;
+}
+
+header {
+    background: #0757a0;
+    color: white;
+    text-align: center;
+    padding: 22px;
+}
+
+.profile {
+    background: white;
+    width: 90%;
+    max-width: 450px;
+    margin: 25px auto;
+    padding: 25px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #ccc;
+}
+
+.photo {
+    width: 90px;
+    height: 90px;
+    margin: auto;
+    border-radius: 50%;
+    background: #0757a0;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+}
+
+h2 {
+    text-align: center;
+    color: #0757a0;
+}
+
+.info {
+    border-bottom: 1px solid #ddd;
+    padding: 13px 0;
+}
+
+.info b {
+    color: #0757a0;
+}
+
+.back {
+    display: block;
+    width: 180px;
+    margin: 25px auto;
+    padding: 12px;
+    text-align: center;
+    background: #0757a0;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>UHS GAHIRI</h1>
+    <p>👤 Student Profile</p>
+</header>
+
+<div class="profile">
+
+    <div class="photo">
+        👤
+    </div>
+
+    <h2>Student Profile</h2>
+
+    <div class="info">
+        <b>Name:</b>
+        <span id="studentName">Student</span>
+    </div>
+
+    <div class="info">
+        <b>Student ID:</b>
+        <span id="studentID">---</span>
+    </div>
+
+    <div class="info">
+        <b>Class:</b> 12th
+    </div>
+
+    <div class="info">
+        <b>Stream:</b> Science
+    </div>
+
+    <div class="info">
+        <b>School:</b> UHS GAHIRI
+    </div>
+
+</div>
+
+<button class="back" onclick="goDashboard()">
+    ← Dashboard
+</button>
+
+<script>
+
+let loggedIn =
+localStorage.getItem("studentLoggedIn");
+
+if (loggedIn !== "true") {
+
+    alert("Please Student Login karein.");
+
+    window.location.href = "login.html";
+
+}
+
+let studentID =
+localStorage.getItem("studentID");
+
+if (studentID) {
+
+    document.getElementById("studentID").innerText =
+    studentID;
+
+}
+
+function goDashboard() {
+
+    window.location.href =
+    "dashboard.html";
+
+}
+
+</script>
+
+</body>
+</html>

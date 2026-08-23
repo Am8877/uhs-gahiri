@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Subjects - UHS GAHIRI</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef5ff;
+}
+
+header {
+    background: #0757a0;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.subjects {
+    width: 90%;
+    max-width: 600px;
+    margin: 25px auto;
+}
+
+.subject {
+    background: white;
+    margin: 15px 0;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px #ccc;
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    font-size: 32px;
+    width: 55px;
+}
+
+.subject h3 {
+    margin: 0;
+    color: #0757a0;
+}
+
+.subject p {
+    margin: 5px 0 0;
+    color: #555;
+}
+
+.back {
+    display: block;
+    width: 180px;
+    margin: 25px auto;
+    padding: 12px;
+    text-align: center;
+    background: #0757a0;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>UHS GAHIRI</h1>
+    <p>📚 My Subjects</p>
+</header>
+
+<div class="subjects">
+
+    <div class="subject">
+        <div class="icon">⚛️</div>
+        <div>
+            <h3>Physics</h3>
+            <p>Science Subject</p>
+        </div>
+    </div>
+
+    <div class="subject">
+        <div class="icon">🧪</div>
+        <div>
+            <h3>Chemistry</h3>
+            <p>Science Subject</p>
+        </div>
+    </div>
+
+    <div class="subject">
+        <div class="icon">🧬</div>
+        <div>
+            <h3>Biology</h3>
+            <p>Science Subject</p>
+        </div>
+    </div>
+
+    <div class="subject">
+        <div class="icon">📖</div>
+        <div>
+            <h3>Hindi</h3>
+            <p>Language Subject</p>
+        </div>
+    </div>
+
+    <div class="subject">
+        <div class="icon">🔤</div>
+        <div>
+            <h3>English</h3>
+            <p>Language Subject</p>
+        </div>
+    </div>
+
+    <div class="subject">
+        <div class="icon">💻</div>
+        <div>
+            <h3>Computer</h3>
+            <p>Additional Subject</p>
+        </div>
+    </div>
+
+</div>
+
+<button class="back" onclick="goDashboard()">
+    ← Dashboard
+</button>
+
+<script>
+
+let loggedIn =
+localStorage.getItem("studentLoggedIn");
+
+if (loggedIn !== "true") {
+
+    alert("Please Student Login karein.");
+
+    window.location.href = "login.html";
+}
+
+function goDashboard() {
+    window.location.href = "dashboard.html";
+}
+
+</script>
+
+</body>
+</html>

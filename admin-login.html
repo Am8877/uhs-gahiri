@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Principal Login - UHS GAHIRI</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef5ff;
+}
+
+.login-box {
+    width: 90%;
+    max-width: 380px;
+    margin: 80px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px #bbb;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+    color: #0757a0;
+}
+
+p {
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin-top: 18px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    margin-top: 7px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 25px;
+    background: #0757a0;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.back {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #0757a0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-box">
+
+<h1>UHS GAHIRI</h1>
+
+<p>Principal / Admin Login</p>
+
+<form id="loginForm">
+
+<label>Admin ID</label>
+<input type="text" id="adminId" required>
+
+<label>Password</label>
+<input type="password" id="adminPassword" required>
+
+<button type="submit">Login</button>
+
+</form>
+
+<a class="back" href="index.html">← Back to Home</a>
+
+</div>
+
+<script>
+
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    let id = document.getElementById("adminId").value.trim();
+    let password = document.getElementById("adminPassword").value;
+
+    if (id === "principal" && password === "1234") {
+
+        window.location.href = "admin.html";
+
+    } else {
+
+        alert("Admin ID ya Password galat hai!");
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

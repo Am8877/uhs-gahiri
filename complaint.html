@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Complaint - UHS GAHIRI</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef5ff;
+}
+
+header {
+    background: #0757a0;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.container {
+    padding: 20px;
+}
+
+.box {
+    background: white;
+    padding: 20px;
+    margin-bottom: 18px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #ccc;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 7px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+textarea {
+    height: 130px;
+}
+
+button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 7px;
+    background: #0757a0;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.success {
+    display: none;
+    margin-top: 20px;
+    padding: 15px;
+    background: #d4edda;
+    color: green;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.complaint {
+    background: white;
+    padding: 18px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #ccc;
+}
+
+.status {
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 6px;
+    background: #fff3cd;
+    color: #856404;
+    font-weight: bold;
+}
+
+.solved {
+    background: #d4edda;
+    color: green;
+}
+
+.reply {
+    margin-top: 15px;
+    padding: 12px;
+    background: #eef5ff;
+    border-left: 4px solid #0757a0;
+    border-radius: 6px;
+}
+
+.back {
+    display: block;
+    width: 180px;
+    margin: 25px auto;
+    padding: 12px;
+    text-align: center;
+    background: #0757a0;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+}
+
+h2 {
+    color: #0757a0;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>UHS GAHIRI</h1>
+    <p>Principal Complaint</p>
+</header>
+
+<div class="container">
+
+<div class="box">
+
+<h2>📝 Principal को शिकायत</h2>
+
+<form id="complaintForm">
+
+<label>Student Name</label>
+
+<input
+type="text"
+id="name"
+placeholder="अपना नाम लिखें"
+required
+>
+
+<label>Student ID</label>
+
+<input
+type="text"
+id="studentId"
+placeholder="Student ID"
+required
+>
+
+<label>Complaint Type</label>
+
+<select id="type" required>
+
+<option value="">Complaint Type चुनें</option>
+
+<option value="Teacher Related">
+Teacher Related
+</option>
+
+<option value="School Related">
+School Related
+</option>
+
+<option value="Homework Related">
+Homework Related
+</option>
+
+<option value="Attendance Related">
+Attendance Related
+</option>
+
+<option value="Other">
+Other
+</option>
+
+</select>
+
+<label>Complaint</label>
+
+<textarea
+id="complaint"
+placeholder="अपनी शिकायत यहाँ लिखें..."
+required></textarea>
+
+<button type="submit">
+📤 Submit Complaint
+</button>
+
+</form>
+
+<div class="success" id="success">
+✅ Complaint Successfully Submitted!
+<br>
+Principal आपकी complaint देख सकते हैं।
+</div>
+
+</div>
+
+<h2>📋 मेरी Complaints</h2>
+
+<div id="myComplaints"></div>
+
+</div>
+
+<a class="back" href="dashboard.html">
+← Dashboard
+</a>
+
+<script>
+
+document.getElementById("complaintForm").addEventListener(
+"submit",
+function(event) {
+
+event.preventDefault();
+
+let name =
+document.getElementById("name").value.trim();
+
+let studentId =
+document.getElementById("studentId").value.trim();
+
+let type =
+document.getElementById("type").value;
+
+let complaint =
+document.getElementById("complaint").value.trim();
+
+let data = {
+
+name: name,
+
+studentId: studentId,
+
+type: type,
+
+complaint: complaint,
+
+status: "Pending",
+
+reply: "",
+
+date: new Date().toLocaleDateString()
+
+};
+
+let complaints =
+JSON.parse(
+localStorage.getItem("uhsComplaints")
+) || [];
+
+complaints.push(data);
+
+localStorage.setItem(
+"uhsComplaints",
+JSON.stringify(complaints)
+);
+
+document.getElementById("success").style.display =
+"block";
+
+document.getElementById("complaintForm").reset();
+
+showComplaints();
+
+});
+
+
+function showComplaints() {
+
+let complaints =
+JSON.parse(
+localStorage.getItem("uhsComplaints")
+) || [];
+
+let box =
+document.getElementById("myComplaints");
+
+box.innerHTML = "";
+
+if (complaints.length === 0) {
+
+box.innerHTML = `
+<div class="box">
+📭 अभी कोई complaint नहीं है।
+</div>
+`;
+
+return;
+
+}
+
+complaints.forEach(function(c, index) {
+
+let div =
+document.createElement("div");
+
+div.className = "complaint";
+
+div.innerHTML = `
+
+<h3>📝 Complaint #${index + 1}</h3>
+
+<p>
+<b>Student:</b> ${c.name}
+</p>
+
+<p>
+<b>Student ID:</b> ${c.studentId}
+</p>
+
+<p>
+<b>Type:</b> ${c.type}
+</p>
+
+<p>
+<b>Complaint:</b><br>
+${c.complaint}
+</p>
+
+<p>
+<b>Status:</b>
+
+<span class="status ${
+c.status === "Solved" ? "solved" : ""
+}">
+${c.status}
+</span>
+
+</p>
+
+${
+c.reply
+?
+`
+<div class="reply">
+<b>💬 Principal का Reply:</b>
+<br><br>
+${c.reply}
+</div>
+`
+:
+`
+<p>
+⏳ Principal का reply अभी नहीं आया है।
+</p>
+`
+}
+
+`;
+
+box.appendChild(div);
+
+});
+
+}
+
+
+showComplaints();
+
+</script>
+
+</body>
+</html>
