@@ -69,6 +69,11 @@ button{
     border-radius:7px;
     font-size:16px;
     font-weight:bold;
+    cursor:pointer;
+}
+
+button:active{
+    transform:scale(.98);
 }
 
 .switch{
@@ -123,7 +128,7 @@ button{
 <h1>UHS GAHIRI</h1>
 
 
-<!-- LOGIN -->
+<!-- ================= LOGIN ================= -->
 
 <div id="loginBox">
 
@@ -136,19 +141,19 @@ button{
 <label>Student ID</label>
 
 <input
-type="text"
-id="loginStudentId"
-placeholder="Enter Student ID"
-required
+    type="text"
+    id="loginStudentId"
+    placeholder="Enter Student ID"
+    required
 >
 
 <label>Password</label>
 
 <input
-type="password"
-id="loginPassword"
-placeholder="Enter Password"
-required
+    type="password"
+    id="loginPassword"
+    placeholder="Enter Password"
+    required
 >
 
 <button type="submit">
@@ -159,8 +164,8 @@ required
 
 
 <div
-class="switch"
-onclick="showRegister()">
+    class="switch"
+    onclick="showRegister()">
 
 📝 New Student? Register Here
 
@@ -168,8 +173,8 @@ onclick="showRegister()">
 
 
 <div
-class="message error"
-id="loginError">
+    class="message error"
+    id="loginError">
 
 ❌ Student ID या Password गलत है।
 
@@ -178,7 +183,7 @@ id="loginError">
 </div>
 
 
-<!-- REGISTER -->
+<!-- ================= REGISTER ================= -->
 
 <div id="registerBox">
 
@@ -188,35 +193,36 @@ id="loginError">
 
 <form id="registerForm">
 
+
 <label>Student Name</label>
 
 <input
-type="text"
-id="studentName"
-placeholder="Enter Full Name"
-required
+    type="text"
+    id="studentName"
+    placeholder="Enter Full Name"
+    required
 >
 
 
 <label>Student ID</label>
 
 <input
-type="text"
-id="registerStudentId"
-placeholder="Create Student ID"
-required
+    type="text"
+    id="registerStudentId"
+    placeholder="Create Student ID"
+    required
 >
 
 
 <label>Mobile Number</label>
 
 <input
-type="tel"
-id="studentMobile"
-placeholder="10 digit mobile number"
-maxlength="10"
-inputmode="numeric"
-required
+    type="tel"
+    id="studentMobile"
+    placeholder="10 digit mobile number"
+    maxlength="10"
+    inputmode="numeric"
+    required
 >
 
 
@@ -228,13 +234,21 @@ required
 -- Class Select करें --
 </option>
 
-<option value="9">9th</option>
+<option value="9">
+9th
+</option>
 
-<option value="10">10th</option>
+<option value="10">
+10th
+</option>
 
-<option value="11">11th</option>
+<option value="11">
+11th
+</option>
 
-<option value="12">12th</option>
+<option value="12">
+12th
+</option>
 
 </select>
 
@@ -271,30 +285,32 @@ required
 <label>Email</label>
 
 <input
-type="email"
-id="studentEmail"
-placeholder="Enter Email"
-required
+    type="email"
+    id="studentEmail"
+    placeholder="Enter Email"
+    required
 >
 
 
 <label>Password</label>
 
 <input
-type="password"
-id="registerPassword"
-placeholder="Create Password"
-required
+    type="password"
+    id="registerPassword"
+    placeholder="Create Password"
+    minlength="6"
+    required
 >
 
 
 <label>Confirm Password</label>
 
 <input
-type="password"
-id="confirmPassword"
-placeholder="Confirm Password"
-required
+    type="password"
+    id="confirmPassword"
+    placeholder="Confirm Password"
+    minlength="6"
+    required
 >
 
 
@@ -306,8 +322,8 @@ required
 
 
 <div
-class="switch"
-onclick="showLogin()">
+    class="switch"
+    onclick="showLogin()">
 
 🔐 Already have an account? Login
 
@@ -315,14 +331,14 @@ onclick="showLogin()">
 
 
 <div
-class="message error"
-id="registerError">
+    class="message error"
+    id="registerError">
 </div>
 
 
 <div
-class="message success"
-id="registerSuccess">
+    class="message success"
+    id="registerSuccess">
 </div>
 
 </div>
@@ -335,7 +351,7 @@ id="registerSuccess">
 </div>
 
 
-<!-- SUPABASE -->
+<!-- ================= SUPABASE ================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -354,178 +370,154 @@ supabase.createClient(
 );
 
 
-/* SHOW LOGIN */
+/* ================= SHOW LOGIN ================= */
 
 function showLogin(){
 
-    document.getElementById(
-        "loginBox"
-    ).style.display="block";
+    document.getElementById("loginBox")
+        .style.display = "block";
 
-    document.getElementById(
-        "registerBox"
-    ).style.display="none";
+    document.getElementById("registerBox")
+        .style.display = "none";
 
 }
 
 
-/* SHOW REGISTER */
+/* ================= SHOW REGISTER ================= */
 
 function showRegister(){
 
-    document.getElementById(
-        "loginBox"
-    ).style.display="none";
+    document.getElementById("loginBox")
+        .style.display = "none";
 
-    document.getElementById(
-        "registerBox"
-    ).style.display="block";
+    document.getElementById("registerBox")
+        .style.display = "block";
 
 }
 
 
-/* CLASS */
+/* ================= CLASS / STREAM ================= */
 
-document.getElementById(
-    "studentClass"
-).addEventListener(
-"change",
-function(){
+document.getElementById("studentClass")
+.addEventListener("change", function(){
 
-    let streamBox =
-        document.getElementById(
-            "streamBox"
-        );
+    const streamBox =
+        document.getElementById("streamBox");
 
-    let stream =
-        document.getElementById(
-            "studentStream"
-        );
+    const stream =
+        document.getElementById("studentStream");
+
 
     if(
         this.value === "11" ||
         this.value === "12"
     ){
 
-        streamBox.style.display="block";
+        streamBox.style.display = "block";
 
-        stream.required=true;
+        stream.required = true;
 
     }else{
 
-        streamBox.style.display="none";
+        streamBox.style.display = "none";
 
-        stream.required=false;
+        stream.required = false;
 
-        stream.value="";
+        stream.value = "";
 
     }
 
 });
 
 
-/* REGISTER */
+/* ================= REGISTER ================= */
 
-document.getElementById(
-    "registerForm"
-).addEventListener(
-"submit",
-async function(event){
+document.getElementById("registerForm")
+.addEventListener("submit", async function(event){
 
     event.preventDefault();
 
 
-    let error =
-        document.getElementById(
-            "registerError"
-        );
+    const error =
+        document.getElementById("registerError");
 
-    let success =
-        document.getElementById(
-            "registerSuccess"
-        );
+    const success =
+        document.getElementById("registerSuccess");
 
 
-    error.style.display="none";
-
-    success.style.display="none";
-
-
-    let name =
-        document.getElementById(
-            "studentName"
-        ).value.trim();
+    error.style.display = "none";
+    success.style.display = "none";
 
 
-    let studentId =
-        document.getElementById(
-            "registerStudentId"
-        ).value.trim();
+    const name =
+        document.getElementById("studentName")
+        .value.trim();
 
 
-    let mobile =
-        document.getElementById(
-            "studentMobile"
-        ).value.trim();
+    const studentId =
+        document.getElementById("registerStudentId")
+        .value.trim();
 
 
-    let studentClass =
-        document.getElementById(
-            "studentClass"
-        ).value;
+    const mobile =
+        document.getElementById("studentMobile")
+        .value.trim();
 
 
-    let studentStream =
-        document.getElementById(
-            "studentStream"
-        ).value;
+    const studentClass =
+        document.getElementById("studentClass")
+        .value;
 
 
-    let email =
-        document.getElementById(
-            "studentEmail"
-        ).value.trim();
+    const studentStream =
+        document.getElementById("studentStream")
+        .value;
 
 
-    let password =
-        document.getElementById(
-            "registerPassword"
-        ).value;
+    const email =
+        document.getElementById("studentEmail")
+        .value.trim();
 
 
-    let confirmPassword =
-        document.getElementById(
-            "confirmPassword"
-        ).value;
+    const password =
+        document.getElementById("registerPassword")
+        .value;
 
 
-    /* MOBILE */
+    const confirmPassword =
+        document.getElementById("confirmPassword")
+        .value;
+
+
+    /* MOBILE CHECK */
 
     if(!/^[0-9]{10}$/.test(mobile)){
 
         error.innerHTML =
-            "❌ सही 10 digit Mobile Number डालें।";
+        "❌ सही 10 digit Mobile Number डालें।";
 
-        error.style.display="block";
+        error.style.display = "block";
 
         return;
+
     }
 
 
-    /* CLASS */
+    /* CLASS CHECK */
 
     if(!studentClass){
 
         error.innerHTML =
-            "❌ Class select करें।";
+        "❌ Class select करें।";
 
-        error.style.display="block";
+        error.style.display = "block";
 
         return;
+
     }
 
 
-    /* STREAM */
+    /* STREAM CHECK */
 
     if(
         (studentClass === "11" ||
@@ -535,176 +527,210 @@ async function(event){
     ){
 
         error.innerHTML =
-            "❌ 11th/12th में Stream select करें।";
+        "❌ 11th/12th में Stream select करें।";
 
-        error.style.display="block";
+        error.style.display = "block";
 
         return;
+
     }
 
 
-    /* PASSWORD */
+    /* PASSWORD CHECK */
 
     if(password.length < 6){
 
         error.innerHTML =
-            "❌ Password कम से कम 6 characters का होना चाहिए।";
+        "❌ Password कम से कम 6 characters का होना चाहिए।";
 
-        error.style.display="block";
+        error.style.display = "block";
 
         return;
+
     }
 
 
     if(password !== confirmPassword){
 
         error.innerHTML =
-            "❌ Password match नहीं कर रहा।";
+        "❌ Password match नहीं कर रहा।";
 
-        error.style.display="block";
+        error.style.display = "block";
 
         return;
+
     }
 
 
     /* CHECK STUDENT ID */
 
-    const { data:idData } =
+    const { data:idData, error:idError } =
         await supabaseClient
         .from("students")
         .select("id")
-        .eq("student_id",studentId)
+        .eq("student_id", studentId)
         .maybeSingle();
+
+
+    if(idError){
+
+        console.log(idError);
+
+        error.innerHTML =
+        "❌ Student ID check failed: " +
+        idError.message;
+
+        error.style.display = "block";
+
+        return;
+
+    }
 
 
     if(idData){
 
         error.innerHTML =
-            "❌ यह Student ID पहले से registered है।";
+        "❌ यह Student ID पहले से registered है।";
 
-        error.style.display="block";
+        error.style.display = "block";
 
         return;
+
     }
 
 
     /* CHECK MOBILE */
 
-    const { data:mobileData } =
+    const { data:mobileData, error:mobileError } =
         await supabaseClient
         .from("students")
         .select("id")
-        .eq("mobile",mobile)
+        .eq("mobile", mobile)
         .maybeSingle();
+
+
+    if(mobileError){
+
+        console.log(mobileError);
+
+        error.innerHTML =
+        "❌ Mobile check failed: " +
+        mobileError.message;
+
+        error.style.display = "block";
+
+        return;
+
+    }
 
 
     if(mobileData){
 
         error.innerHTML =
-            "❌ यह Mobile Number पहले से registered है।";
+        "❌ यह Mobile Number पहले से registered है।";
 
-        error.style.display="block";
+        error.style.display = "block";
 
         return;
+
     }
 
 
-    /* INSERT */
+    /* ================= INSERT STUDENT ================= */
 
-    const { error:insertError } =
+    const { data:insertedStudent, error:insertError } =
         await supabaseClient
         .from("students")
         .insert({
 
-            name:name,
+            name: name,
 
-            student_id:studentId,
+            student_id: studentId,
 
-            mobile:mobile,
+            mobile: mobile,
 
-            email:email,
+            email: email,
 
-            password:password,
+            password: password,
 
-            student_class:studentClass,
+            class_name: studentClass,
 
-            student_stream:
-                studentStream || ""
+            stream: studentStream || ""
 
-        });
+        })
+        .select()
+        .single();
 
+
+    /* INSERT ERROR */
 
     if(insertError){
 
         console.log(insertError);
 
         error.innerHTML =
-            "❌ Registration failed: " +
-            insertError.message;
+        "❌ Registration failed: " +
+        insertError.message;
 
-        error.style.display="block";
+        error.style.display = "block";
 
         return;
+
     }
 
 
     /* SUCCESS */
 
     success.innerHTML =
-        "✅ Registration Successful!";
+    "✅ Registration Successful! Student ID: " +
+    studentId;
 
-    success.style.display="block";
-
-
-    document.getElementById(
-        "registerForm"
-    ).reset();
+    success.style.display = "block";
 
 
-    document.getElementById(
-        "streamBox"
-    ).style.display="none";
+    document.getElementById("registerForm")
+        .reset();
+
+
+    document.getElementById("streamBox")
+        .style.display = "none";
 
 
     setTimeout(function(){
 
         showLogin();
 
+        document.getElementById("loginStudentId")
+            .value = studentId;
+
     },1500);
 
 });
 
 
-/* LOGIN */
+/* ================= LOGIN ================= */
 
-document.getElementById(
-    "loginForm"
-).addEventListener(
-"submit",
-async function(event){
+document.getElementById("loginForm")
+.addEventListener("submit", async function(event){
 
     event.preventDefault();
 
 
-    let id =
-        document.getElementById(
-            "loginStudentId"
-        ).value.trim();
+    const id =
+        document.getElementById("loginStudentId")
+        .value.trim();
 
 
-    let password =
-        document.getElementById(
-            "loginPassword"
-        ).value;
+    const password =
+        document.getElementById("loginPassword")
+        .value;
 
 
-    let loginError =
-        document.getElementById(
-            "loginError"
-        );
+    const loginError =
+        document.getElementById("loginError");
 
 
-    loginError.style.display="none";
+    loginError.style.display = "none";
 
 
     /* FIND STUDENT */
@@ -713,71 +739,91 @@ async function(event){
         await supabaseClient
         .from("students")
         .select("*")
-        .eq("student_id",id)
-        .eq("password",password)
+        .eq("student_id", id)
+        .eq("password", password)
         .maybeSingle();
 
+
+    /* DATABASE ERROR */
 
     if(error){
 
         console.log(error);
 
         loginError.innerHTML =
-            "❌ Database error: " +
-            error.message;
+        "❌ Database error: " +
+        error.message;
 
-        loginError.style.display="block";
+        loginError.style.display = "block";
 
         return;
+
     }
 
+
+    /* WRONG LOGIN */
 
     if(!student){
 
         loginError.innerHTML =
-            "❌ Student ID या Password गलत है।";
+        "❌ Student ID या Password गलत है।";
 
-        loginError.style.display="block";
+        loginError.style.display = "block";
 
         return;
+
     }
 
 
-    /* SAVE LOGIN */
+    /* ================= SAVE LOGIN ================= */
 
     localStorage.setItem(
         "studentLoggedIn",
         "true"
     );
 
+
     localStorage.setItem(
         "studentID",
         student.student_id
     );
+
 
     localStorage.setItem(
         "studentName",
         student.name
     );
 
+
     localStorage.setItem(
         "studentMobile",
-        student.mobile
+        student.mobile || ""
     );
+
 
     localStorage.setItem(
         "studentEmail",
-        student.email
+        student.email || ""
     );
+
+
+    /* IMPORTANT:
+       SUPABASE COLUMN = class_name
+    */
 
     localStorage.setItem(
         "studentClass",
-        student.student_class
+        student.class_name || ""
     );
+
+
+    /* IMPORTANT:
+       SUPABASE COLUMN = stream
+    */
 
     localStorage.setItem(
         "studentStream",
-        student.student_stream || ""
+        student.stream || ""
     );
 
 
@@ -794,4 +840,4 @@ async function(event){
 </script>
 
 </body>
-  </html>
+    </html>
