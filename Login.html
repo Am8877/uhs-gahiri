@@ -1,100 +1,797 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f0f2f5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+<title>Student Login - UHS GAHIRI</title>
 
-    .login-box {
-      width: 320px;
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px #aaa;
-    }
+<style>
+*{
+    box-sizing:border-box;
+}
 
-    h2 {
-      text-align: center;
-      margin-bottom: 25px;
-    }
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#eef5ff;
+}
 
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
+.login-box{
+    width:92%;
+    max-width:420px;
+    background:white;
+    margin:30px auto;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 4px 15px #bbb;
+}
 
-    button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 15px;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
+h1{
+    text-align:center;
+    color:#0757a0;
+    margin-bottom:10px;
+}
 
-    button:hover {
-      background: #0056b3;
-    }
+h2{
+    text-align:center;
+    color:#0757a0;
+}
 
-    #message {
-      text-align: center;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-  </style>
+p{
+    text-align:center;
+    color:#555;
+}
+
+label{
+    display:block;
+    margin-top:14px;
+    font-weight:bold;
+}
+
+input,
+select{
+    width:100%;
+    padding:13px;
+    margin-top:7px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    margin-top:20px;
+    background:#0757a0;
+    color:white;
+    border:none;
+    border-radius:7px;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.switch{
+    text-align:center;
+    margin-top:18px;
+    color:#0757a0;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.message{
+    display:none;
+    margin-top:15px;
+    padding:12px;
+    border-radius:7px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.success{
+    background:#d4edda;
+    color:#155724;
+}
+
+.error{
+    background:#f8d7da;
+    color:#721c24;
+}
+
+#registerBox{
+    display:none;
+}
+
+#streamBox{
+    display:none;
+}
+
+.back{
+    display:block;
+    text-align:center;
+    margin-top:20px;
+    color:#0757a0;
+    text-decoration:none;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="login-box">
-    <h2>Login</h2>
+<div class="login-box">
 
-    <input type="text" id="username" placeholder="Username">
+<h1>UHS GAHIRI</h1>
 
-    <input type="password" id="password" placeholder="Password">
 
-    <button onclick="login()">Login</button>
+<!-- LOGIN -->
 
-    <p id="message"></p>
-  </div>
+<div id="loginBox">
 
-  <script>
-    function login() {
-      let username = document.getElementById("username").value;
-      let password = document.getElementById("password").value;
+<h2>🎓 Student Login</h2>
 
-      if (username === "admin" && password === "1234") {
-        document.getElementById("message").innerHTML =
-          "Login Successful ✅";
+<p>Login to your student account</p>
 
-        setTimeout(function() {
-          document.getElementById("message").innerHTML =
-  "Login Successful ✅";
+<form id="loginForm">
 
-      } else {
-        document.getElementById("message").innerHTML =
-          "Username ya Password galat hai ❌";
-      }
+<label>Student ID</label>
+
+<input
+type="text"
+id="loginStudentId"
+placeholder="Enter Student ID"
+required
+>
+
+<label>Password</label>
+
+<input
+type="password"
+id="loginPassword"
+placeholder="Enter Password"
+required
+>
+
+<button type="submit">
+🔐 Login
+</button>
+
+</form>
+
+
+<div
+class="switch"
+onclick="showRegister()">
+
+📝 New Student? Register Here
+
+</div>
+
+
+<div
+class="message error"
+id="loginError">
+
+❌ Student ID या Password गलत है।
+
+</div>
+
+</div>
+
+
+<!-- REGISTER -->
+
+<div id="registerBox">
+
+<h2>📝 Student Registration</h2>
+
+<p>Create your student account</p>
+
+<form id="registerForm">
+
+<label>Student Name</label>
+
+<input
+type="text"
+id="studentName"
+placeholder="Enter Full Name"
+required
+>
+
+
+<label>Student ID</label>
+
+<input
+type="text"
+id="registerStudentId"
+placeholder="Create Student ID"
+required
+>
+
+
+<label>Mobile Number</label>
+
+<input
+type="tel"
+id="studentMobile"
+placeholder="10 digit mobile number"
+maxlength="10"
+inputmode="numeric"
+required
+>
+
+
+<label>Class</label>
+
+<select id="studentClass" required>
+
+<option value="">
+-- Class Select करें --
+</option>
+
+<option value="9">9th</option>
+
+<option value="10">10th</option>
+
+<option value="11">11th</option>
+
+<option value="12">12th</option>
+
+</select>
+
+
+<!-- STREAM -->
+
+<div id="streamBox">
+
+<label>Stream</label>
+
+<select id="studentStream">
+
+<option value="">
+-- Stream Select करें --
+</option>
+
+<option value="science">
+🔬 Science
+</option>
+
+<option value="arts">
+📚 Arts
+</option>
+
+<option value="commerce">
+💼 Commerce
+</option>
+
+</select>
+
+</div>
+
+
+<label>Email</label>
+
+<input
+type="email"
+id="studentEmail"
+placeholder="Enter Email"
+required
+>
+
+
+<label>Password</label>
+
+<input
+type="password"
+id="registerPassword"
+placeholder="Create Password"
+required
+>
+
+
+<label>Confirm Password</label>
+
+<input
+type="password"
+id="confirmPassword"
+placeholder="Confirm Password"
+required
+>
+
+
+<button type="submit">
+✅ Register
+</button>
+
+</form>
+
+
+<div
+class="switch"
+onclick="showLogin()">
+
+🔐 Already have an account? Login
+
+</div>
+
+
+<div
+class="message error"
+id="registerError">
+</div>
+
+
+<div
+class="message success"
+id="registerSuccess">
+</div>
+
+</div>
+
+
+<a class="back" href="index.html">
+← Back to Home
+</a>
+
+</div>
+
+
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+"https://rdnficdoftkfgveidykh.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_3RaikJM0PVKpghxxNhMK3Q_T2FAebwj";
+
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* SHOW LOGIN */
+
+function showLogin(){
+
+    document.getElementById(
+        "loginBox"
+    ).style.display="block";
+
+    document.getElementById(
+        "registerBox"
+    ).style.display="none";
+
+}
+
+
+/* SHOW REGISTER */
+
+function showRegister(){
+
+    document.getElementById(
+        "loginBox"
+    ).style.display="none";
+
+    document.getElementById(
+        "registerBox"
+    ).style.display="block";
+
+}
+
+
+/* CLASS */
+
+document.getElementById(
+    "studentClass"
+).addEventListener(
+"change",
+function(){
+
+    let streamBox =
+        document.getElementById(
+            "streamBox"
+        );
+
+    let stream =
+        document.getElementById(
+            "studentStream"
+        );
+
+    if(
+        this.value === "11" ||
+        this.value === "12"
+    ){
+
+        streamBox.style.display="block";
+
+        stream.required=true;
+
+    }else{
+
+        streamBox.style.display="none";
+
+        stream.required=false;
+
+        stream.value="";
+
     }
-  </script>
+
+});
+
+
+/* REGISTER */
+
+document.getElementById(
+    "registerForm"
+).addEventListener(
+"submit",
+async function(event){
+
+    event.preventDefault();
+
+
+    let error =
+        document.getElementById(
+            "registerError"
+        );
+
+    let success =
+        document.getElementById(
+            "registerSuccess"
+        );
+
+
+    error.style.display="none";
+
+    success.style.display="none";
+
+
+    let name =
+        document.getElementById(
+            "studentName"
+        ).value.trim();
+
+
+    let studentId =
+        document.getElementById(
+            "registerStudentId"
+        ).value.trim();
+
+
+    let mobile =
+        document.getElementById(
+            "studentMobile"
+        ).value.trim();
+
+
+    let studentClass =
+        document.getElementById(
+            "studentClass"
+        ).value;
+
+
+    let studentStream =
+        document.getElementById(
+            "studentStream"
+        ).value;
+
+
+    let email =
+        document.getElementById(
+            "studentEmail"
+        ).value.trim();
+
+
+    let password =
+        document.getElementById(
+            "registerPassword"
+        ).value;
+
+
+    let confirmPassword =
+        document.getElementById(
+            "confirmPassword"
+        ).value;
+
+
+    /* MOBILE */
+
+    if(!/^[0-9]{10}$/.test(mobile)){
+
+        error.innerHTML =
+            "❌ सही 10 digit Mobile Number डालें।";
+
+        error.style.display="block";
+
+        return;
+    }
+
+
+    /* CLASS */
+
+    if(!studentClass){
+
+        error.innerHTML =
+            "❌ Class select करें।";
+
+        error.style.display="block";
+
+        return;
+    }
+
+
+    /* STREAM */
+
+    if(
+        (studentClass === "11" ||
+         studentClass === "12")
+        &&
+        !studentStream
+    ){
+
+        error.innerHTML =
+            "❌ 11th/12th में Stream select करें।";
+
+        error.style.display="block";
+
+        return;
+    }
+
+
+    /* PASSWORD */
+
+    if(password.length < 6){
+
+        error.innerHTML =
+            "❌ Password कम से कम 6 characters का होना चाहिए।";
+
+        error.style.display="block";
+
+        return;
+    }
+
+
+    if(password !== confirmPassword){
+
+        error.innerHTML =
+            "❌ Password match नहीं कर रहा।";
+
+        error.style.display="block";
+
+        return;
+    }
+
+
+    /* CHECK STUDENT ID */
+
+    const { data:idData } =
+        await supabaseClient
+        .from("students")
+        .select("id")
+        .eq("student_id",studentId)
+        .maybeSingle();
+
+
+    if(idData){
+
+        error.innerHTML =
+            "❌ यह Student ID पहले से registered है।";
+
+        error.style.display="block";
+
+        return;
+    }
+
+
+    /* CHECK MOBILE */
+
+    const { data:mobileData } =
+        await supabaseClient
+        .from("students")
+        .select("id")
+        .eq("mobile",mobile)
+        .maybeSingle();
+
+
+    if(mobileData){
+
+        error.innerHTML =
+            "❌ यह Mobile Number पहले से registered है।";
+
+        error.style.display="block";
+
+        return;
+    }
+
+
+    /* INSERT */
+
+    const { error:insertError } =
+        await supabaseClient
+        .from("students")
+        .insert({
+
+            name:name,
+
+            student_id:studentId,
+
+            mobile:mobile,
+
+            email:email,
+
+            password:password,
+
+            student_class:studentClass,
+
+            student_stream:
+                studentStream || ""
+
+        });
+
+
+    if(insertError){
+
+        console.log(insertError);
+
+        error.innerHTML =
+            "❌ Registration failed: " +
+            insertError.message;
+
+        error.style.display="block";
+
+        return;
+    }
+
+
+    /* SUCCESS */
+
+    success.innerHTML =
+        "✅ Registration Successful!";
+
+    success.style.display="block";
+
+
+    document.getElementById(
+        "registerForm"
+    ).reset();
+
+
+    document.getElementById(
+        "streamBox"
+    ).style.display="none";
+
+
+    setTimeout(function(){
+
+        showLogin();
+
+    },1500);
+
+});
+
+
+/* LOGIN */
+
+document.getElementById(
+    "loginForm"
+).addEventListener(
+"submit",
+async function(event){
+
+    event.preventDefault();
+
+
+    let id =
+        document.getElementById(
+            "loginStudentId"
+        ).value.trim();
+
+
+    let password =
+        document.getElementById(
+            "loginPassword"
+        ).value;
+
+
+    let loginError =
+        document.getElementById(
+            "loginError"
+        );
+
+
+    loginError.style.display="none";
+
+
+    /* FIND STUDENT */
+
+    const { data:student, error } =
+        await supabaseClient
+        .from("students")
+        .select("*")
+        .eq("student_id",id)
+        .eq("password",password)
+        .maybeSingle();
+
+
+    if(error){
+
+        console.log(error);
+
+        loginError.innerHTML =
+            "❌ Database error: " +
+            error.message;
+
+        loginError.style.display="block";
+
+        return;
+    }
+
+
+    if(!student){
+
+        loginError.innerHTML =
+            "❌ Student ID या Password गलत है।";
+
+        loginError.style.display="block";
+
+        return;
+    }
+
+
+    /* SAVE LOGIN */
+
+    localStorage.setItem(
+        "studentLoggedIn",
+        "true"
+    );
+
+    localStorage.setItem(
+        "studentID",
+        student.student_id
+    );
+
+    localStorage.setItem(
+        "studentName",
+        student.name
+    );
+
+    localStorage.setItem(
+        "studentMobile",
+        student.mobile
+    );
+
+    localStorage.setItem(
+        "studentEmail",
+        student.email
+    );
+
+    localStorage.setItem(
+        "studentClass",
+        student.student_class
+    );
+
+    localStorage.setItem(
+        "studentStream",
+        student.student_stream || ""
+    );
+
+
+    alert(
+        "Login Successful! ✅"
+    );
+
+
+    window.location.href =
+        "dashboard.html";
+
+});
+
+</script>
 
 </body>
-</html>
+  </html>
